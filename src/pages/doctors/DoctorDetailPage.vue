@@ -1,9 +1,9 @@
 <script>
-import Pills from "../../components/Pills.vue";
+import ReviewCard from "../../components/ReviewCard.vue";
 
 export default {
   name: "DoctorDetail",
-  components: { Pills },
+  components: { ReviewCard },
 };
 </script>
 
@@ -28,7 +28,7 @@ export default {
     </div>
   </div>
   <hr />
-  <div class="recensioni ms-3">recensioni</div>
+  <ReviewCard />
   <hr />
 </template>
 
