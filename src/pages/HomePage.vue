@@ -9,8 +9,8 @@ export default {
 </script>
 
 <template>
-  <!-- <DoctorsList /> -->
-  <DoctorDetailPage />
+  <DoctorsList />
+  <!-- <DoctorDetailPage /> -->
 </template>
 
 <style></style>
