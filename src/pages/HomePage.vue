@@ -1,9 +1,14 @@
 <script>
+import DoctorsList from "../components/doctors/DoctorsList.vue";
+
 export default {
-    name: "HomePage",
-}
+  name: "HomePage",
+  components: { DoctorsList },
+};
 </script>
 
-<template></template>
+<template>
+  <DoctorsList />
+</template>
 
 <style></style>
