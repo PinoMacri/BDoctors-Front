@@ -1,12 +1,32 @@
 <script>
+import axios from "axios";
+
+const emptyForm = { name: "", email: "", password: "", confirm_password: "" };
 export default {
   name: "Form",
 
   data() {
-    return {};
+    return {
+      form: emptyForm,
+    };
   },
 
-  methods: {},
+  methods: {
+    sendRegistation() {
+      if (this.form.password === this.form.confirm_password) {
+        axios
+          .post(endpoint, this.form)
+          .then(() => {
+            this.form = { name: "", email: "", password: "" };
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        console.log("no");
+      }
+    },
+  },
 };
 </script>
 
@@ -23,14 +43,16 @@ export default {
                     Sign up
                   </p>
 
-                  <form class="mx-1 mx-md-4">
+                  <form @submit.prevent="sendRegistation" class="mx-1 mx-md-4">
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw mb-4"></i>
                       <div class="form-outline flex-fill mb-0">
                         <input
                           type="text"
-                          id="form3Example1c"
+                          id="name"
+                          name="name"
                           class="form-control"
+                          v-model.trim="form.name"
                         />
                         <label class="form-label" for="form3Example1c"
                           >Your Name</label
@@ -43,8 +65,10 @@ export default {
                       <div class="form-outline flex-fill mb-0">
                         <input
                           type="email"
-                          id="form3Example3c"
+                          id="email"
+                          name="email"
                           class="form-control"
+                          v-model.trim="form.email"
                         />
                         <label class="form-label" for="form3Example3c"
                           >Your Email</label
@@ -57,8 +81,10 @@ export default {
                       <div class="form-outline flex-fill mb-0">
                         <input
                           type="password"
-                          id="form3Example4c"
+                          id="password"
+                          name="password"
                           class="form-control"
+                          v-model.trim="form.password"
                         />
                         <label class="form-label" for="form3Example4c"
                           >Password</label
@@ -71,8 +97,10 @@ export default {
                       <div class="form-outline flex-fill mb-0">
                         <input
                           type="password"
-                          id="form3Example4cd"
+                          id="confirm_password"
+                          name="confirm_password"
                           class="form-control"
+                          v-model.trim="form.confirm_password"
                         />
                         <label class="form-label" for="form3Example4cd"
                           >Repeat your password</label
@@ -96,7 +124,7 @@ export default {
                     <div
                       class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                     >
-                      <button type="button" class="btn btn-primary btn-lg">
+                      <button type="submit" class="btn btn-primary btn-lg">
                         Register
                       </button>
                     </div>
