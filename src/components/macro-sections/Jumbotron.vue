@@ -76,52 +76,128 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.filtri {
+    flex-direction: column;
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+
+
+    .nome-dottore {
+        border-radius: 30px 30px 0px 0px;
+    }
+
+    input {
+        width: 250px;
+        padding: 10px;
+
+        box-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em red;
+    }
+
+    button {
+        border-radius: 0px 0px 30px 30px;
+        height: 40px;
+        box-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em red;
+        color: white;
+        text-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
+        background: linear-gradient(to right, #00ccff, #094088, #0e80dd);
+        background-size: 600% 100%;
+        animation: gradient 10s ease infinite;
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .filtri {
+
+        input {
+            width: 450px;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .filtri {
+        flex-direction: row;
+        bottom: 70%;
+
+        input {
+            width: 200px;
+        }
+
+        button {
+            width: 200px;
+            border-radius: 0px 30px 30px 0px;
+            height: 47.5px
+        }
+
+        .nome-dottore {
+            border-radius: 30px 0px 0px 30px;
+
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .filtri {
+        flex-direction: row;
+        bottom: 70%;
+
+        input {
+            width: 200px;
+        }
+
+        button {
+            width: 200px;
+            border-radius: 0px 30px 30px 0px;
+            height: 47.5px
+        }
+
+        .nome-dottore {
+            border-radius: 30px 0px 0px 30px;
+
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .filtri {
+        bottom: 50%;
+
+        input {
+            width: 250px;
+        }
+
+        button {
+            width: 250px;
+        }
+    }
+}
+
+
+
 .jumbotron {
     box-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
     height: 400px;
     position: relative;
 
-    .filtri {
-        position: absolute;
-        bottom: 50%;
-        left: 50%;
-        transform: translateX(-50%);
 
-        input {
-            padding: 10px;
-            width: 250px;
-            box-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em red;
-        }
 
-        .nome-dottore {
-            border-radius: 30px 0px 0px 30px;
-        }
 
-        button {
-            width: 200px;
-            box-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em red;
-            border-radius: 0px 30px 30px 0px;
-            color: white;
-            text-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
-            background: linear-gradient(to right, #00ccff, #094088, #0e80dd);
-            background-size: 600% 100%;
-            animation: gradient 10s ease infinite;
-
-            @keyframes gradient {
-                0% {
-                    background-position: 0% 50%;
-                }
-
-                50% {
-                    background-position: 100% 50%;
-                }
-
-                100% {
-                    background-position: 0% 50%;
-                }
-            }
-        }
-    }
 
     .actives {
         box-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em red;

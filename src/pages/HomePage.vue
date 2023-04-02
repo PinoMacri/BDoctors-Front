@@ -46,9 +46,8 @@ export default {
   <Navbar />
 
   <Jumbotron />
-  <div class="container">
-    <DoctorsList :doctors="doctors" />
-  </div>
+  <DoctorsList :doctors="doctors" />
+
 
   <!-- <Form /> -->
 </template>
