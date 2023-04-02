@@ -1,5 +1,4 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue';
 import axios from "axios";
 </script>
 
@@ -7,4 +6,4 @@ import axios from "axios";
   <RouterView />
 </template>
 
-<style ></style>
+<style></style>

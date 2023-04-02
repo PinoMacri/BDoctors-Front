@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import { store } from "../data/store";
 
 const emptyForm = { name: "", email: "", password: "", confirm_password: "" };
 export default {
@@ -8,20 +9,23 @@ export default {
   data() {
     return {
       form: emptyForm,
+      store,
     };
   },
 
   methods: {
     sendRegistation() {
       if (this.form.password === this.form.confirm_password) {
-        axios
-          .post(endpoint, this.form)
-          .then(() => {
-            this.form = { name: "", email: "", password: "" };
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        // axios
+        //   .post(endpoint, this.form)
+        //   .then(() => {
+        //     this.form = { name: "", email: "", password: "" };
+        //   })
+        //   .catch((err) => {
+        //     console.error(err);
+        //   });
+        this.store.isRegistered = true;
+        console.log(this.store.isRegistered);
       } else {
         console.log("no");
       }
