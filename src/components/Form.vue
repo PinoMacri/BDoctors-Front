@@ -3,6 +3,7 @@ import axios from "axios";
 import { store } from "../data/store";
 
 const emptyForm = { name: "", email: "", password: "", confirm_password: "" };
+const endpoint = "http://127.0.0.1:8000/api/store";
 export default {
   name: "Form",
 
