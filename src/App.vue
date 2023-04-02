@@ -12,4 +12,10 @@ export default {
   <RouterView />
 </template>
 
-<style></style>
+<style>
+body {
+
+  font-family: 'Quicksand', sans-serif;
+
+}
+</style>
