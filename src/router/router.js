@@ -9,11 +9,7 @@ const router = createRouter({
     { path: "/contatti", name: "contatti", component: HomePage },
     { path: "/chi-siamo", name: "chisiamo", component: HomePage },
     { path: "/:pathMatch(.*)", redirect: "/" },
-    {
-      path: "/doctors/:id",
-      name: "doctor-detail",
-      component: DoctorDetailPage,
-    },
+    // { path: "/doctors/:id", name: "doctor-detail", component: DoctorDetailPage },
   ]
 });
 export { router };
