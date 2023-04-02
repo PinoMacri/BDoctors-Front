@@ -16,14 +16,14 @@ export default {
   methods: {
     sendRegistation() {
       if (this.form.password === this.form.confirm_password) {
-        // axios
-        //   .post(endpoint, this.form)
-        //   .then(() => {
-        //     this.form = { name: "", email: "", password: "" };
-        //   })
-        //   .catch((err) => {
-        //     console.error(err);
-        //   });
+        axios
+          .post(endpoint, this.form)
+          .then(() => {
+            this.form = { name: "", email: "", password: "" };
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         this.store.isRegistered = true;
         console.log(this.store.isRegistered);
       } else {

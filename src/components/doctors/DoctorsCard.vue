@@ -1,25 +1,40 @@
 <script>
 export default {
   name: "DoctorsCard",
+  props: {
+    doctor: Object,
+  },
 };
 </script>
 
 <template>
-  <div v-if="!isDetail" class="card doctor-card text-bg-dark">
-    <img
-      src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
-      class="card-img"
-      alt="..."
-    />
-    <div class="card-img-overlay overlay">
-      <h5 class="card-title h3">Doctors name</h5>
-      <p class="card-text ps-1">Doctors description</p>
-      <div class="doctor-info">
-        <p class="card-text">Doctors location</p>
-        <p class="card-text"><small>vote</small></p>
+  <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
+    <div class="card doctor-card text-bg-dark">
+      <img
+        v-if="!doctor.photo"
+        src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
+        class="card-img"
+        alt="..."
+      />
+      <img v-else :src="doctor.photo" class="card-img" alt="..." />
+      <div class="card-img-overlay overlay">
+        <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
+        <div class="d-flex justify-content-center mt-4">
+          <div
+            v-for="specialization in doctor.specializations"
+            class="badge me-3"
+            :style="{ backgroundColor: specialization.color }"
+          >
+            {{ specialization.name }}
+          </div>
+        </div>
+        <div class="doctor-info">
+          <p class="card-text">{{ doctor.address }}</p>
+          <p class="card-text">+39 {{ doctor.phone }}</p>
+        </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <style scoped lang="scss">

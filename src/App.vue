@@ -1,6 +1,4 @@
-<script setup>
-import axios from "axios";
-</script>
+<script></script>
 
 <template>
   <RouterView />
