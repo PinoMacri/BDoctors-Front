@@ -2,19 +2,24 @@
 import Form from "../components/Form.vue";
 import DoctorsList from "../components/doctors/DoctorsList.vue";
 import DoctorDetailPage from "./doctors/DoctorDetailPage.vue";
+import Jumbotron from "../components/macro-sections/Jumbotron.vue"
+import Navbar from "../components/macro-sections/Navbar.vue"
 import { store } from "../data/store";
 import axios from "axios";
 
 const apiBaseUrl = "http://127.0.0.1:8000/api";
 export default {
   name: "HomePage",
-  components: { DoctorsList, DoctorDetailPage, Form },
+  components: { DoctorsList, DoctorDetailPage, Form, Jumbotron },
   data() {
     return {
       store,
       doctors: [],
     };
   },
+
+
+
   methods: {
     fetchGames(endpoint = null) {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
@@ -38,20 +43,9 @@ export default {
 </script>
 
 <template>
-  <!-- <DoctorDetailPage /> -->
-  <div class="nav-container">
-    <div class="logo-box">
-      <div class="pill">
-        <div class="left-side"></div>
-        <div class="right-side"></div>
-      </div>
-      <div class="title-nav">MY-DOCTOR</div>
-    </div>
-    <div class="login-info">
-      <a href="">LOG IN</a>
-      <a href="">SIGN UP</a>
-    </div>
-  </div>
+  <Navbar />
+
+  <Jumbotron />
   <div class="container">
     <DoctorsList :doctors="doctors" />
   </div>
@@ -65,6 +59,7 @@ export default {
   height: 25px;
   display: flex;
 }
+
 .left-side {
   height: auto;
   width: 35px;
@@ -93,14 +88,13 @@ export default {
   margin-left: 0.625rem;
   font-family: Arial, Helvetica, sans-serif;
   background: rgb(0, 100, 255);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 100, 255, 1) 0%,
-    rgba(255, 45, 45, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(0, 100, 255, 1) 0%,
+      rgba(255, 45, 45, 1) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .nav-container {
   display: flex;
   justify-content: space-between;
@@ -131,6 +125,7 @@ export default {
   color: #154986;
   transition: all 0.5s ease-out;
 }
+
 .login-info a:hover {
   color: #3278cb;
 }
