@@ -8,6 +8,7 @@ export default {
 </script>
 
 <template>
+  <!-- vedi se va -->
   <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
     <div class="card doctor-card text-bg-dark">
       <img
