@@ -14,13 +14,11 @@ export default {
       <p class="mt-3">{{ review.created_at }}</p>
     </div>
     <div class="vote mb-3">
-      <div v-if="review.">
-        <i class="fa-solid fa-star" style="color: #faf200"></i
-        ><i class="fa-solid fa-star" style="color: #faf200"></i
-        ><i class="fa-solid fa-star" style="color: #faf200"></i
-        ><i class="fa-solid fa-star" style="color: #faf200"></i
-        ><i class="fa-solid fa-star" style="color: #faf200"></i>
-      </div>
+      <i class="fa-solid fa-star" style="color: #faf200"></i
+      ><i class="fa-solid fa-star" style="color: #faf200"></i
+      ><i class="fa-solid fa-star" style="color: #faf200"></i
+      ><i class="fa-solid fa-star" style="color: #faf200"></i
+      ><i class="fa-solid fa-star" style="color: #faf200"></i>
     </div>
     <div class="message">
       {{ review.text }}
