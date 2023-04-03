@@ -2,7 +2,16 @@
 import axios from "axios";
 import { store } from "../data/store";
 
-const emptyForm = { name: "", email: "", password: "", confirm_password: "" };
+const apiBaseUrl = "http://localhost:8000/api/specializations";
+const emptyForm = {
+  name: "",
+  email: "",
+  password: "",
+  confirm_password: "",
+  address: "",
+  phone: "",
+  specialization: [],
+};
 const endpoint = "http://127.0.0.1:8000/api/store";
 export default {
   name: "Form",
@@ -11,6 +20,8 @@ export default {
     return {
       form: emptyForm,
       error: "",
+      specializations: [],
+      specialization: [],
       store,
     };
   },
@@ -21,24 +32,64 @@ export default {
         axios
           .post(endpoint, this.form)
           .then(() => {
-            this.form = { name: "", email: "", password: "" };
+            this.form = {
+              name: "",
+              email: "",
+              password: "",
+              address: "",
+              phone: "",
+              specialization: [],
+            };
           })
           .catch((err) => {
             console.error(err);
             this.error = err;
+          })
+          .then(() => {
+            this.$router.push({
+              name: "home",
+              query: { redirect: "/" },
+            });
           });
-
-        this.store.isRegistered = true;
       } else {
         console.log("no");
       }
     },
-    onButtonClicked() {
-      this.$router.push({
-        name: "profile-register-form",
-        query: { redirect: "/profile-register" },
-      });
+    selectSpecialization(id) {
+      if (this.specialization.includes(id)) {
+        let index = this.specialization.indexOf(id);
+        if (index !== -1) {
+          this.specialization.splice(index, 1);
+        }
+      } else {
+        this.specialization.push(id);
+      }
     },
+    onButtonClicked() {
+      this.store.isRegistered = true;
+      console.log(this.form);
+    },
+    fetchSpecializations() {
+      // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
+      axios
+        .get(apiBaseUrl)
+        .then((res) => {
+          // In res.data arrivano i dati della chiamata da axios
+          this.specializations = res.data;
+        })
+        // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+  computed: {
+    pushToForm() {
+      this.form.specialization = this.specialization;
+    },
+  },
+  created() {
+    this.fetchSpecializations();
   },
 };
 </script>
@@ -116,6 +167,60 @@ export default {
                         <label class="form-label" for="confirm_password"
                           >Repeat your password</label
                         >
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-earth fa-lg me-3 fa-fw mb-4"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input
+                          type="text"
+                          id="address"
+                          name="address"
+                          class="form-control"
+                          v-model.trim="form.address"
+                        />
+                        <label class="form-label" for="address"
+                          >Your Address</label
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-phone fa-lg me-3 fa-fw mb-4"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          class="form-control"
+                          v-model.trim="form.phone"
+                        />
+                        <label class="form-label" for="address"
+                          >Your Address</label
+                        >
+                      </div>
+                    </div>
+
+                    <div class="row flex-wrap justify-content-between mb-5">
+                      <div
+                        v-for="specialization in specializations"
+                        :key="specialization.id"
+                        class="form-check me-3 col-3"
+                      >
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          :value="specialization.id"
+                          :id="specialization.id"
+                          name="specialization"
+                          @click="selectSpecialization(specialization.id)"
+                        />
+                        <label
+                          class="form-check-label check-text"
+                          :for="specialization.id"
+                        >
+                          {{ specialization.name }}
+                        </label>
                       </div>
                     </div>
 
