@@ -10,6 +10,7 @@ export default {
   data() {
     return {
       form: emptyForm,
+      error: "",
       store,
     };
   },
@@ -24,12 +25,19 @@ export default {
           })
           .catch((err) => {
             console.error(err);
+            this.error = err;
           });
+
         this.store.isRegistered = true;
-        console.log(this.store.isRegistered);
       } else {
         console.log("no");
       }
+    },
+    onButtonClicked() {
+      this.$router.push({
+        name: "profile-register-form",
+        query: { redirect: "/profile-register" },
+      });
     },
   },
 };
@@ -59,8 +67,8 @@ export default {
                           class="form-control"
                           v-model.trim="form.name"
                         />
-                        <label class="form-label" for="form3Example1c"
-                          >Your Name</label
+                        <label class="form-label" for="name"
+                          >Your Full Name</label
                         >
                       </div>
                     </div>
@@ -75,9 +83,7 @@ export default {
                           class="form-control"
                           v-model.trim="form.email"
                         />
-                        <label class="form-label" for="form3Example3c"
-                          >Your Email</label
-                        >
+                        <label class="form-label" for="email">Your Email</label>
                       </div>
                     </div>
 
@@ -91,7 +97,7 @@ export default {
                           class="form-control"
                           v-model.trim="form.password"
                         />
-                        <label class="form-label" for="form3Example4c"
+                        <label class="form-label" for="password"
                           >Password</label
                         >
                       </div>
@@ -107,7 +113,7 @@ export default {
                           class="form-control"
                           v-model.trim="form.confirm_password"
                         />
-                        <label class="form-label" for="form3Example4cd"
+                        <label class="form-label" for="confirm_password"
                           >Repeat your password</label
                         >
                       </div>
@@ -129,7 +135,11 @@ export default {
                     <div
                       class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                     >
-                      <button type="submit" class="btn btn-primary btn-lg">
+                      <button
+                        @click="onButtonClicked()"
+                        type="submit"
+                        class="btn btn-primary btn-lg"
+                      >
                         Register
                       </button>
                     </div>
