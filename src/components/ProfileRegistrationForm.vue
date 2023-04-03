@@ -1,59 +1,61 @@
 <script>
 import axios from "axios";
-const apiBaseUrl = "http://localhost:8000/api/";
+const apiBaseUrl = "http://localhost:8000/api/specializations";
 import { store } from "../data/store";
 
-const emptyForm = { name: "", email: "", password: "", confirm_password: "" };
+const emptyForm = {
+  address: "",
+  specialization: [],
+};
 const endpoint = "http://127.0.0.1:8000/api/store";
 export default {
   name: "ProfileRegistration",
   data() {
     return {
       form: emptyForm,
+
       store,
     };
   },
 
   methods: {
     sendRegistationProfile() {
-      if (this.form.password === this.form.confirm_password) {
-        axios
-          .post(endpoint, this.form)
-          .then(() => {
-            this.form = { name: "", email: "", password: "" };
-          })
-          .catch((err) => {
-            console.error(err);
-            this.error = err;
-          });
-        if (!this.error) {
-          this.$router.push({
-            name: "home-page",
-            query: { redirect: "/" },
-          });
-          this.store.isRegistered = true;
-        }
+      axios
+        .post(endpoint, this.form)
+        .then(() => {
+          this.form = {};
+          console.log(this.form);
+        })
+        .catch((err) => {
+          console.error(err);
+          this.error = err;
+        });
+      if (!this.error) {
+        this.$router.push({
+          name: "home",
+          query: { redirect: "/" },
+        });
+        this.store.isRegistered = true;
       } else {
         console.log("no");
       }
     },
-    fetchDoctors(endpoint = null) {
+    fetchSpecializations() {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
-      if (!endpoint) endpoint = apiBaseUrl + "/doctors";
       axios
-        .get(endpoint)
+        .get(apiBaseUrl)
         .then((res) => {
           // In res.data arrivano i dati della chiamata da axios
-          this.doctors = res.data;
+          this.specializations = res.data;
         })
         // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
         .catch((err) => {
           console.error(err);
         });
     },
-    created() {
-      this.fetchDoctors();
-    },
+  },
+  created() {
+    this.fetchSpecializations();
   },
 };
 </script>
@@ -91,16 +93,26 @@ export default {
                       </div>
                     </div>
 
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Default checkbox
-                      </label>
+                    <div class="row flex-wrap justify-content-between mb-5">
+                      <div
+                        v-for="specialization in specializations"
+                        :key="specialization.id"
+                        class="form-check me-3 col-3"
+                      >
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          :value="specialization.id"
+                          :id="specialization.id"
+                          name="specialization[]"
+                        />
+                        <label
+                          class="form-check-label check-text"
+                          :for="specialization.id"
+                        >
+                          {{ specialization.name }}
+                        </label>
+                      </div>
                     </div>
 
                     <div
@@ -133,4 +145,8 @@ export default {
   </section>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.check-text {
+  font-size: 14px;
+}
+</style>
