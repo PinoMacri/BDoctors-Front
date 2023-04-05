@@ -2,7 +2,7 @@
 import DoctorsCard from "./DoctorsCard.vue";
 
 export default {
-  name: "HomePage",
+  name: "DoctorsList",
   props: { doctors: Array },
   components: { DoctorsCard },
 };

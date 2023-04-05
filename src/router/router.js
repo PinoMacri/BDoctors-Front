@@ -12,6 +12,8 @@ import Udito from "../components/articoli/Udito.vue";
 import Infermiere from "../components/articoli/Infermiere.vue";
 import Mentale from "../components/articoli/Mentale.vue";
 import Rare from "../components/articoli/Rare.vue";
+// import RegistrationForm from "../components/RegistrationForm.vue";
+import AdvancedSearchPage from "../pages/AdvancedSearchPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,17 +34,37 @@ const router = createRouter({
     },
 
     { path: "/sistema-dilops", name: "dilops", component: Dilops },
-    { path: "/centro-diagnostico-pantamedica", name: "pantamedica", component: Pantamedica },
-    { path: "/diventare-naturopati", name: "naturopati", component: Naturopati },
+    {
+      path: "/centro-diagnostico-pantamedica",
+      name: "pantamedica",
+      component: Pantamedica,
+    },
+    {
+      path: "/diventare-naturopati",
+      name: "naturopati",
+      component: Naturopati,
+    },
     { path: "/suture", name: "suture", component: Suture },
     { path: "/studio-ronconi", name: "ronconi", component: Ronconi },
     { path: "/colesterolo", name: "colesterolo", component: Colesterolo },
     { path: "/risk-management", name: "risk-management", component: Risk },
-    { path: "/giornata-mondiale-udito", name: "giornata-mondiale-udito", component: Udito },
-    { path: "/super-infermiere", name: "super-infermiere", component: Infermiere },
+    {
+      path: "/giornata-mondiale-udito",
+      name: "giornata-mondiale-udito",
+      component: Udito,
+    },
+    {
+      path: "/super-infermiere",
+      name: "super-infermiere",
+      component: Infermiere,
+    },
     { path: "/salute-mentale", name: "salute-mentale", component: Mentale },
     { path: "/malattie-rare", name: "malattie-rare", component: Rare },
-
+    {
+      path: "/search",
+      name: "search",
+      component: AdvancedSearchPage,
+    },
     { path: "/:pathMatch(.*)", redirect: "/" },
   ],
 });
