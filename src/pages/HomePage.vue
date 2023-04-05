@@ -23,7 +23,7 @@ export default {
   },
 
   methods: {
-    fetchGames(endpoint = null) {
+    fetchDoctors(endpoint = null) {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       if (!endpoint) endpoint = apiBaseUrl + "/doctors";
       axios
@@ -39,7 +39,7 @@ export default {
     },
   },
   created() {
-    this.fetchGames();
+    this.fetchDoctors();
   },
 };
 </script>

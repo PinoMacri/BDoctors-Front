@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import DoctorDetailPage from "../pages/doctors/DoctorDetailPage.vue";
+<<<<<<< HEAD
 import Dilops from "../components/articoli/Dilops.vue";
 import Pantamedica from "../components/articoli/Pantamedica.vue";
 import Naturopati from "../components/articoli/Naturopati.vue";
@@ -12,6 +13,9 @@ import Udito from "../components/articoli/Udito.vue";
 import Infermiere from "../components/articoli/Infermiere.vue";
 import Mentale from "../components/articoli/Mentale.vue";
 import Rare from "../components/articoli/Rare.vue";
+=======
+import RegistrationForm from "../components/RegistrationForm.vue";
+>>>>>>> 8d5808fea9ea7effa39af6e22829a1e58c3afc6f
 
 const router = createRouter({
   history: createWebHistory(),

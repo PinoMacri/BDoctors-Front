@@ -72,8 +72,8 @@ export default {
           </div>
         </div>
         <div class="col-3 text-end">
-          <a class="px-4" href="#">Login</a>
-          <router-link :to="{ name: 'register-form' }">Register</router-link>
+          <a class="px-4" href="http://127.0.0.1:8000/login">Login</a>
+          <a class="px-4" href="http://127.0.0.1:8000/register">Register</a>
         </div>
       </div>
     </nav>
