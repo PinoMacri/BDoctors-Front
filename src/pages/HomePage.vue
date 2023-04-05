@@ -9,7 +9,7 @@ import Footer from "../components/macro-sections/Footer.vue"
 import Aside from "../components/macro-sections/Aside.vue"
 import { store } from "../data/store";
 import axios from "axios";
-import { store } from "../data/store";
+
 
 const apiBaseUrl = "http://127.0.0.1:8000/api";
 export default {
