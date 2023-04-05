@@ -17,11 +17,6 @@ export default {
                     current: false,
                 },
                 {
-                    text: "Specializzazione",
-                    url: '/specializzazione',
-                    current: false,
-                },
-                {
                     text: "Contatti",
                     url: '/contatti',
                     current: false,
@@ -88,25 +83,14 @@ export default {
 <style lang="scss" scoped>
 // NAV
 .nav-bar {
+    position: sticky;
+    z-index: 2;
+    top: 0;
     box-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
 
-    background: linear-gradient(to right, #00ccff, #094088, #0e80dd);
-    background-size: 600% 100%;
-    animation: gradient 10s ease infinite;
+    background: linear-gradient(to right, #082f9c, #3da3cc);
 
-    @keyframes gradient {
-        0% {
-            background-position: 0% 50%;
-        }
 
-        50% {
-            background-position: 100% 50%;
-        }
-
-        100% {
-            background-position: 0% 50%;
-        }
-    }
 
     nav {
         font-family: 'Quicksand', sans-serif;

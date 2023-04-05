@@ -3,14 +3,19 @@ import Form from "../components/Form.vue";
 import DoctorsList from "../components/doctors/DoctorsList.vue";
 import DoctorDetailPage from "./doctors/DoctorDetailPage.vue";
 import Jumbotron from "../components/macro-sections/Jumbotron.vue"
+import SectionType1 from "../components/macro-sections/SectionType1.vue"
+import SectionType2 from "../components/macro-sections/SectionType2.vue"
+import SectionSlider from "../components/macro-sections/SectionSlider.vue"
 import Navbar from "../components/macro-sections/Navbar.vue"
+import Footer from "../components/macro-sections/Footer.vue"
+import Aside from "../components/macro-sections/Aside.vue"
 import { store } from "../data/store";
 import axios from "axios";
 
 const apiBaseUrl = "http://127.0.0.1:8000/api";
 export default {
   name: "HomePage",
-  components: { DoctorsList, DoctorDetailPage, Form, Jumbotron },
+  components: { DoctorsList, DoctorDetailPage, Form, Jumbotron, SectionType1, SectionType2, SectionSlider, Aside, Footer },
   data() {
     return {
       store,
@@ -47,8 +52,11 @@ export default {
 
   <Jumbotron />
   <DoctorsList :doctors="doctors" />
-
-
+  <SectionType1 />
+  <SectionType2 />
+  <SectionSlider />
+  <Aside />
+  <Footer />
   <!-- <Form /> -->
 </template>
 

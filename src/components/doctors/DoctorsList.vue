@@ -20,7 +20,7 @@ export default {
 
 <style scoped lang="scss">
 .completed-list {
-  border: 6px solid black;
+  border: 1px solid black;
   height: 600px;
 }
 
