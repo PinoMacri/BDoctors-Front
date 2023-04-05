@@ -12,7 +12,6 @@ import Udito from "../components/articoli/Udito.vue";
 import Infermiere from "../components/articoli/Infermiere.vue";
 import Mentale from "../components/articoli/Mentale.vue";
 import Rare from "../components/articoli/Rare.vue";
-// import RegistrationForm from "../components/RegistrationForm.vue";
 import AdvancedSearchPage from "../pages/AdvancedSearchPage.vue";
 
 const router = createRouter({
