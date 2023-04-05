@@ -1,10 +1,9 @@
 <script>
-import axios from "axios";
-import Navbar from "./components/macro-sections/Navbar.vue"
+import Navbar from "./components/macro-sections/Navbar.vue";
 export default {
   name: "App",
   components: { Navbar },
-}
+};
 </script>
 
 <template>
@@ -14,8 +13,6 @@ export default {
 
 <style>
 body {
-
-  font-family: 'Quicksand', sans-serif;
-
+  font-family: "Quicksand", sans-serif;
 }
 </style>

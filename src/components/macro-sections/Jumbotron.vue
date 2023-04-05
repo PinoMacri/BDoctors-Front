@@ -30,7 +30,7 @@ export default {
                 if (this.currentIndex === this.images.length) {
                     this.currentIndex = 0;
                 }
-            }, 3000);
+            }, 5000);
         }
     },
     created() {
