@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import DoctorDetailPage from "../pages/doctors/DoctorDetailPage.vue";
-import RegistrationForm from "../components/RegistrationForm.vue";
+// import RegistrationForm from "../components/RegistrationForm.vue";
+import AdvancedSearchPage from "../pages/AdvancedSearchPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,10 +22,15 @@ const router = createRouter({
       component: DoctorDetailPage,
     },
     {
-      path: "/register",
-      name: "register-form",
-      component: RegistrationForm,
+      path: "/search",
+      name: "search",
+      component: AdvancedSearchPage,
     },
+    // {
+    //   path: "/register",
+    //   name: "register-form",
+    //   component: RegistrationForm,
+    // },
 
     { path: "/:pathMatch(.*)", redirect: "/" },
   ],

@@ -1,8 +1,39 @@
 <script>
+import { store } from "../../data/store";
 export default {
   name: "DoctorsCard",
   props: {
     doctor: Object,
+  },
+  data() {
+    return {
+      store,
+      name: "",
+      address: "",
+      specialization: "",
+    };
+  },
+  methods: {
+    fill() {
+      this.name = this.store.name.trim().toLowerCase();
+      this.address = this.store.address.trim().toLowerCase();
+      this.specialization = this.store.specialization.trim().toLowerCase();
+    },
+    try() {
+      console.log(this.name);
+      console.log(this.store.name);
+      console.log(this.address);
+      console.log(this.store.address);
+      console.log(this.specialization);
+      console.log(this.store.specialization);
+    },
+  },
+
+  created() {
+    this.fill();
+  },
+  mounted() {
+    this.try();
   },
 };
 </script>

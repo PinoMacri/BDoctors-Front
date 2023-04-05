@@ -82,11 +82,13 @@ export default {
       this.store.specialization = this.specialization;
     },
     onButtonClicked() {
+      this.updateName();
+      this.updateAddress();
       this.updateSpecialization();
-      //    this.$router.push({
-      //      name: "home",
-      //      query: { redirect: "/" },
-      //    });
+      this.$router.push({
+        name: "search",
+        query: { redirect: "/search" },
+      });
     },
   },
   created() {
@@ -119,18 +121,12 @@ export default {
           <input
             class="nome-dottore"
             v-model.trim="name"
-            @keyup="updateName"
             placeholder="Nome Dottore"
             type="text"
           />
         </div>
         <div class="citta-dottore">
-          <input
-            v-model.trim="address"
-            @keyup="updateAddress"
-            placeholder="Città"
-            type="text"
-          />
+          <input v-model.trim="address" placeholder="Città" type="text" />
         </div>
         <div class="specializzazione-dottore">
           <select
@@ -200,7 +196,7 @@ export default {
     text-align: start;
     appearance: auto;
     -webkit-rtl-ordering: logical;
-    cursor: text;
+    cursor: pointer;
     background-color: field;
     margin: 0em;
     padding: 1px 2px;
