@@ -89,16 +89,6 @@ export default {
   box-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
 
   background: linear-gradient(to right, #082f9c, #3da3cc);
-
-
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 nav {
@@ -165,7 +155,7 @@ nav {
   text-decoration: none;
   color: black;
 }
-}
+
 
 // RESPONSIVE
 @media screen and (min-width: 0px) {
