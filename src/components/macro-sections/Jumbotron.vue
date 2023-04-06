@@ -104,57 +104,18 @@ export default {
     <div class="jumbotron">
       <div class="h-100">
         <i class="fa-solid fa-chevron-left" @click="sliderLess()"></i>
-        <img
-          v-for="image in images"
-          :class="currentIndex === image.id ? 'actives' : 'carosello'"
-          :src="image.url"
-          alt=""
-        />
+        <img v-for="image in images" :class="currentIndex === image.id ? 'actives' : 'carosello'" :src="image.url"
+          alt="" />
         <i class="fa-solid fa-chevron-right" @click="sliderPlus()"></i>
       </div>
 
-      <form
-        @submit.prevent="$emit('form-submit')"
-        class="d-flex filtri"
-        action=""
-      >
-        <div>
-          <input
-            class="nome-dottore"
-            v-model.trim="name"
-            placeholder="Nome Dottore"
-            type="text"
-          />
-        </div>
-        <div class="citta-dottore">
-          <input v-model.trim="address" placeholder="Città" type="text" />
-        </div>
-        <div class="specializzazione-dottore">
-          <select
-            v-model="specialization"
-            class="specializzazione"
-            aria-label="Default select example"
-          >
-            <option value="" selected>Specializzazione</option>
-            <option v-for="specialization in specializations">
-              {{ specialization.name }}
-            </option>
-          </select>
-        </div>
-        <button @click="onButtonClicked">Cerca</button>
-      </form>
 
       <div class="d-flex circle">
-        <i
-          v-for="image in images"
-          class="p-2"
-          :class="
-            currentIndex === image.id
-              ? 'fa-solid fa-circle'
-              : 'fa-regular fa-circle'
-          "
-          @click="currentIndex = image.id"
-        ></i>
+        <i v-for="image in images" class="p-2" :class="
+          currentIndex === image.id
+            ? 'fa-solid fa-circle'
+            : 'fa-regular fa-circle'
+        " @click="currentIndex = image.id"></i>
       </div>
     </div>
   </div>
@@ -349,7 +310,7 @@ export default {
     left: 50%;
   }
 
-  div > img {
+  div>img {
     position: absolute;
     top: 0;
     height: 100%;
