@@ -37,11 +37,22 @@ export default {
         .then((res) => {
           // In res.data arrivano i dati della chiamata da axios
           this.doctors = res.data;
+
         })
         // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
         .catch((err) => {
           console.error(err);
         });
+    },
+  },
+  computed: {
+    sponsoredDoctor() {
+      return this.doctors.filter((doctor) => {
+        if (doctor.is_sponsored) {
+          return true
+
+        }
+      })
     },
   },
   created() {
@@ -53,7 +64,7 @@ export default {
 <template>
   <Jumbotron />
   <div class="container">
-    <DoctorsList :doctors="doctors" />
+    <DoctorsList :doctors="sponsoredDoctor" />
   </div>
   <SectionType1 />
   <SectionType2 />

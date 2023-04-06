@@ -11,6 +11,7 @@ import Risk from "../components/articoli/Risk.vue";
 import Udito from "../components/articoli/Udito.vue";
 import Infermiere from "../components/articoli/Infermiere.vue";
 import Mentale from "../components/articoli/Mentale.vue";
+import Ricerca from "../pages/Ricerca.vue";
 import Rare from "../components/articoli/Rare.vue";
 import AdvancedSearchPage from "../pages/AdvancedSearchPage.vue";
 
@@ -18,7 +19,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", name: "home", component: HomePage },
-    { path: "/ricerca", name: "ricerca", component: HomePage },
+    { path: "/ricerca", name: "ricerca", component: Ricerca },
     {
       path: "/specializzazione",
       name: "specializzazione",

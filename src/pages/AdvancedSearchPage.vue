@@ -21,7 +21,7 @@ export default {
         .get(endpoint)
         .then((res) => {
           // In res.data arrivano i dati della chiamata da axios
-          this.doctors = res.data;
+          this.doctors = res.data
         })
         // Controllo con catch se ci sono errori
         .catch((err) => {
@@ -30,14 +30,10 @@ export default {
     },
   },
   computed: {
-    filter() {
-      if (this.store.name) {
-        return this.doctors.filter((doctor) => {
-          return doctor.user.name
-            .toLowerCase()
-            .includes(this.store.name.toLowerCase());
-        });
-      }
+    sponsoredDoctor() {
+      this.doctors.filter((doctor) => {
+        if (doctor.is_sponsored) return true
+      })
     },
   },
   created() {
@@ -50,11 +46,7 @@ export default {
   <div class="container">
     <h3 class="text-danger mt-4 mb-5 text-center">Dottori Trovati</h3>
     <div class="doctors-list d-flex justify-content-start flex-wrap mb-5">
-      <DoctorsCard
-        v-for="(doctor, i) in filter"
-        :key="doctor.id"
-        :doctor="doctor"
-      />
+      <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" />
     </div>
   </div>
 </template>
