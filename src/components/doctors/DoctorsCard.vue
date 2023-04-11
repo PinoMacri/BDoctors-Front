@@ -5,6 +5,7 @@ export default {
   name: "DoctorsCard",
   props: {
     doctor: Object,
+    voto: Number,
   },
   data() {
     return {
@@ -12,7 +13,9 @@ export default {
       name: "",
       address: "",
       specialization: "",
-      media: {},
+      sum: 0,
+      media: 0,
+      medias: 0,
     };
   },
   methods: {
@@ -41,22 +44,21 @@ export default {
         } else message += " &#9734 "
       return message
     },
-    try() {
-      console.log(this.name);
-      console.log(this.store.name);
-      console.log(this.address);
-      console.log(this.store.address);
-      console.log(this.specialization);
-      console.log(this.store.specialization);
+  },
+  computed: {
+    getMedia() {
+      let sum = 0;
+      this.doctor.votes.forEach((vote) => {
+        sum = sum + vote.value;
+      });
+      this.media = sum / this.doctor.votes.length;
+      console.log(this.media);
+      return this.media;
     },
   },
-
   created() {
     this.fill();
-    this.fetchMedia();
-  },
-  mounted() {
-    this.try();
+    this.getMedia;
   },
 };
 </script>
@@ -83,9 +85,32 @@ export default {
           <p v-html="getStar()"></p>
           <p class="card-text">+39 {{ doctor.phone }}</p>
         </div>
-      </div>
-    </div>
-  </router-link>
+        =======
+        <div v-if="voto <= this.media || voto === 0">
+          <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
+            <div class="card doctor-card text-bg-dark">
+              <img v-if="!doctor.photo"
+                src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
+                class="card-img" alt="..." />
+              <img v-else :src="doctor.photo" class="card-img" alt="..." />
+              <div class="card-img-overlay overlay">
+                <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
+                <div class="d-flex justify-content-center mt-4">
+                  <div v-for="specialization in doctor.specializations" class="badge me-3"
+                    :style="{ backgroundColor: specialization.color }">
+                    {{ specialization.name }}
+                  </div>
+                </div>
+                <div class="doctor-info">
+                  <p class="card-text">{{ doctor.address }}</p>
+                  <p class="card-text">{{ doctor.city }}</p>
+                  <p class="card-text">+39 {{ doctor.phone }}</p>
+                </div>
+              </div>
+              >>>>>>> 3abc3e27c26abbc7632b729ef26b118563a70816
+            </div>
+          </router-link>
+        </div>
 </template>
 
 <style scoped lang="scss">

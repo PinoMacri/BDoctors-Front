@@ -16,11 +16,12 @@ export default {
             name: "",
             address: "",
             specialization: "",
-            voto: "",
+            voto: 0,
             votes: [],
-            media: {},
             city: "",
-        }
+            media: 0,
+            id: 0,
+        };
     },
     methods: {
         fetchDoctors(endpoint = null) {
@@ -31,7 +32,6 @@ export default {
                 .then((res) => {
                     // In res.data arrivano i dati della chiamata da axios
                     this.doctors = res.data;
-
                 })
                 // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
                 .catch((err) => {
@@ -51,14 +51,13 @@ export default {
             this.store.city = this.city;
         },
         updateVote() {
-            this.store.vote = this.voto;
+            this.store.city = this.city;
         },
         onButtonClicked() {
             this.updateName();
             this.updateAddress();
             this.updateSpecialization();
             this.updateCity();
-            this.updateVote();
         },
         fetchSpecializations() {
             // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
@@ -86,91 +85,117 @@ export default {
                     console.error(err);
                 });
         },
-    }, computed:
-    {
+    },
+    computed: {
         filter() {
-            if (this.store.name && this.store.city && this.store.specialization && this.store.vote) {
+            if (this.store.name && this.store.city && this.store.specialization) {
                 return this.doctors.filter((doctor) => {
-                    return doctor.user.name
-                        .toLowerCase()
-                        .includes(this.store.name.toLowerCase()) &&
-                        doctor.city
+                    return (
+                        doctor.user.name
                             .toLowerCase()
-                            .includes(this.store.city.toLowerCase()) &&
-                        doctor.specializations.map((specialization) => {
-                            return specialization.name.toLowerCase();
-                        }).includes(this.store.specialization.toLowerCase()) &&
-                        doctor.votes.map((vote) => {
-                            return vote.label.toLowerCase();
-                        }).includes(this.store.vote.toLowerCase())
+                            .includes(this.store.name.toLowerCase()) &&
+                        doctor.city.toLowerCase().includes(this.store.city.toLowerCase()) &&
+                        doctor.specializations
+                            .map((specialization) => {
+                                return specialization.name.toLowerCase();
+                            })
+                            .includes(this.store.specialization.toLowerCase())
+                    );
                 });
             } else if (this.store.name) {
                 return this.doctors.filter((doctor) => {
                     return doctor.user.name
                         .toLowerCase()
-                        .includes(this.store.name.toLowerCase())
+                        .includes(this.store.name.toLowerCase());
                 });
             } else if (this.store.city) {
                 return this.doctors.filter((doctor) => {
                     return doctor.city
                         .toLowerCase()
-                        .includes(this.store.city.toLowerCase())
+                        .includes(this.store.city.toLowerCase());
                 });
             } else if (this.store.specialization) {
                 return this.doctors.filter((doctor) => {
-                    return doctor.specializations.map((specialization) => {
-                        return specialization.name.toLowerCase();
-                    }).includes(this.store.specialization.toLowerCase());
-                })
-            } else if (this.store.vote) {
-                return this.doctors.filter((doctor) => {
-                    return doctor.votes.map((vote) => {
-                        return vote.label.toLowerCase();
-                    }).includes(this.store.vote.toLowerCase());
+                    return doctor.specializations
+                        .map((specialization) => {
+                            return specialization.name.toLowerCase();
+                        })
+                        .includes(this.store.specialization.toLowerCase());
                 });
-            } else return this.doctors
-        }
+            } else return this.doctors;
+        },
     },
     created() {
         this.fetchDoctors();
         this.fetchSpecializations();
         this.fetchVotes();
-
     },
 };
 </script>
 
 <template>
     <div class="container">
-        <h3 class="text-danger mt-4 mb-5 text-center">Tutti i nostri Specialisti</h3>
-        <form @submit.prevent class="d-flex filtri" action="">
+        <h3 class="text-danger mt-4 mb-5 text-center">
+            Tutti i nostri Specialisti
+        </h3>
+        <div class="d-flex justify-content-between">
             <div>
-                <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
+                <form @submit.prevent class="d-flex filtri" action="">
+                    <div>
+                        <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
+                    </div>
+                    <div class="citta-dottore">
+                        <input v-model.trim="city" placeholder="Città" type="text" />
+                    </div>
+                    <div class="specializzazione-dottore">
+                        <select v-model="specialization" class="specializzazione" aria-label="Default select example">
+                            <option value="" selected>Specializzazione</option>
+                            <option v-for="specialization in specializations">
+                                {{ specialization.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="">
+                        <select v-model="voto" class="specializzazione" aria-label="Default select example">
+                            <option value="" selected>Voto</option>
+                            <option :value="vote.value" v-for="vote in votes">
+                                {{ vote.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <button @click="onButtonClicked">Cerca</button>
+                    =======
+                    <div>
+                        <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
+                    </div>
+                    <div class="citta-dottore">
+                        <input v-model.trim="city" placeholder="Città" type="text" />
+                    </div>
+                    <div class="specializzazione-dottore">
+                        <select v-model="specialization" class="specializzazione" aria-label="Default select example">
+                            <option value="" selected>Specializzazione</option>
+                            <option v-for="specialization in specializations">
+                                {{ specialization.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <button @click="onButtonClicked">Cerca</button>
+                    >>>>>>> 3abc3e27c26abbc7632b729ef26b118563a70816
+                </form>
             </div>
-            <div class="citta-dottore">
-                <input v-model.trim="city" placeholder="Città" type="text" />
-            </div>
-            <div class="specializzazione-dottore">
-                <select v-model="specialization" class="specializzazione" aria-label="Default select example">
-                    <option value="" selected>Specializzazione</option>
-                    <option v-for="specialization in specializations">
-                        {{ specialization.name }}
-                    </option>
-                </select>
-            </div>
+
             <div class="">
                 <select v-model="voto" class="specializzazione" aria-label="Default select example">
-                    <option value="" selected>Voto</option>
+                    <option :value="0" selected>Voto</option>
                     <option :value="vote.value" v-for="vote in votes">
                         {{ vote.label }}
                     </option>
                 </select>
             </div>
-            <button @click="onButtonClicked">Cerca</button>
-        </form>
+        </div>
 
         <div class="doctors-list d-flex justify-content-start flex-wrap mb-5">
-            <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" />
+            <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto" />
         </div>
     </div>
 </template>
