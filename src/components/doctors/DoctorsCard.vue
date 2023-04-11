@@ -1,5 +1,6 @@
 <script>
 import { store } from "../../data/store";
+import axios from "axios";
 export default {
   name: "DoctorsCard",
   props: {
@@ -11,6 +12,7 @@ export default {
       name: "",
       address: "",
       specialization: "",
+      media: {},
     };
   },
   methods: {
@@ -18,6 +20,26 @@ export default {
       this.name = this.store.name.trim().toLowerCase();
       this.address = this.store.address.trim().toLowerCase();
       this.specialization = this.store.specialization.trim().toLowerCase();
+    }, fetchMedia() {
+      // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
+      axios
+        .get(`http://localhost:8000/api/votes/${this.doctor.id}/doctors`)
+        .then((res) => {
+          // In res.data arrivano i dati della chiamata da axios
+          this.media = res.data;
+        })
+        // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getStar() {
+      let message = "";
+      for (let i = 0; i < 5; i++)
+        if (this.media.media && i < this.media.media) {
+          message += " &#9733 "
+        } else message += " &#9734 "
+      return message
     },
     try() {
       console.log(this.name);
@@ -31,6 +53,7 @@ export default {
 
   created() {
     this.fill();
+    this.fetchMedia();
   },
   mounted() {
     this.try();
@@ -45,7 +68,7 @@ export default {
       <img v-if="!doctor.photo"
         src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg" class="card-img"
         alt="..." />
-      <img v-else :src="doctor.photo" class="card-img" alt="..." />
+      <img v-else :src="'http://127.0.0.1:8000/storage/' + doctor.photo" class="card-img" alt="..." />
       <div class="card-img-overlay overlay">
         <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
         <div class="d-flex justify-content-center mt-4">
@@ -57,6 +80,7 @@ export default {
         <div class="doctor-info">
           <p class="card-text">{{ doctor.address }}</p>
           <p class="card-text">{{ doctor.city }}</p>
+          <p v-html="getStar()"></p>
           <p class="card-text">+39 {{ doctor.phone }}</p>
         </div>
       </div>

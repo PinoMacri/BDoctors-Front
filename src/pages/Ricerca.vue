@@ -18,6 +18,7 @@ export default {
             specialization: "",
             voto: "",
             votes: [],
+            media: {},
             city: "",
         }
     },
@@ -50,13 +51,14 @@ export default {
             this.store.city = this.city;
         },
         updateVote() {
-            this.store.city = this.city;
+            this.store.vote = this.voto;
         },
         onButtonClicked() {
             this.updateName();
             this.updateAddress();
             this.updateSpecialization();
             this.updateCity();
+            this.updateVote();
         },
         fetchSpecializations() {
             // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
@@ -84,9 +86,10 @@ export default {
                     console.error(err);
                 });
         },
-    }, computed: {
+    }, computed:
+    {
         filter() {
-            if (this.store.name && this.store.city && this.store.specialization) {
+            if (this.store.name && this.store.city && this.store.specialization && this.store.vote) {
                 return this.doctors.filter((doctor) => {
                     return doctor.user.name
                         .toLowerCase()
@@ -96,7 +99,10 @@ export default {
                             .includes(this.store.city.toLowerCase()) &&
                         doctor.specializations.map((specialization) => {
                             return specialization.name.toLowerCase();
-                        }).includes(this.store.specialization.toLowerCase());
+                        }).includes(this.store.specialization.toLowerCase()) &&
+                        doctor.votes.map((vote) => {
+                            return vote.label.toLowerCase();
+                        }).includes(this.store.vote.toLowerCase())
                 });
             } else if (this.store.name) {
                 return this.doctors.filter((doctor) => {
@@ -116,6 +122,12 @@ export default {
                         return specialization.name.toLowerCase();
                     }).includes(this.store.specialization.toLowerCase());
                 })
+            } else if (this.store.vote) {
+                return this.doctors.filter((doctor) => {
+                    return doctor.votes.map((vote) => {
+                        return vote.label.toLowerCase();
+                    }).includes(this.store.vote.toLowerCase());
+                });
             } else return this.doctors
         }
     },
@@ -123,6 +135,7 @@ export default {
         this.fetchDoctors();
         this.fetchSpecializations();
         this.fetchVotes();
+
     },
 };
 </script>
@@ -148,7 +161,7 @@ export default {
             <div class="">
                 <select v-model="voto" class="specializzazione" aria-label="Default select example">
                     <option value="" selected>Voto</option>
-                    <option v-for="vote in votes">
+                    <option :value="vote.value" v-for="vote in votes">
                         {{ vote.label }}
                     </option>
                 </select>
