@@ -15,6 +15,7 @@ export default {
       specialization: "",
       sum: 0,
       media: 0,
+      medias: 0,
     };
   },
   methods: {
@@ -22,20 +23,6 @@ export default {
       this.name = this.store.name.trim().toLowerCase();
       this.address = this.store.address.trim().toLowerCase();
       this.specialization = this.store.specialization.trim().toLowerCase();
-    },
-    fetchMedia() {
-      // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
-      axios
-        .get(`http://127.0.0.1:8000/api/votes/${this.doctor.id}/doctors`)
-        .then((res) => {
-          // In res.data arrivano i dati della chiamata da axios
-          this.media = res.data;
-          console.log(this.media);
-        })
-        // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
-        .catch((err) => {
-          console.error(err);
-        });
     },
   },
   computed: {
@@ -46,12 +33,11 @@ export default {
       });
       this.media = sum / this.doctor.votes.length;
       console.log(this.media);
-      // return this.media;
+      return this.media;
     },
   },
   created() {
     this.fill();
-    this.fetchMedia();
     this.getMedia;
   },
 };
