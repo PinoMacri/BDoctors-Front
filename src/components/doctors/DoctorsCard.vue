@@ -37,9 +37,10 @@ export default {
         });
     },
     getStar() {
+      let roundedMedia = Math.floor(this.media);
       let message = "";
       for (let i = 0; i < 5; i++)
-        if (this.media && i < this.media) {
+        if (roundedMedia && i < roundedMedia) {
           message += " &#9733 ";
         } else message += " &#9734 ";
       return message;
@@ -52,7 +53,6 @@ export default {
         sum = sum + vote.value;
       });
       this.media = sum / this.doctor.votes.length;
-      console.log(this.media);
       return this.media;
     },
   },
@@ -105,7 +105,7 @@ export default {
 
 <style scoped lang="scss">
 .stars {
-  color: yellow;
+  color: yellow !important;
 }
 .doctor-card {
   width: 400px;
