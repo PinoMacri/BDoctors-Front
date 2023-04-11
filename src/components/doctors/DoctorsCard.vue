@@ -15,7 +15,6 @@ export default {
       specialization: "",
       sum: 0,
       media: 0,
-      medias: 0,
     };
   },
   methods: {
@@ -23,7 +22,8 @@ export default {
       this.name = this.store.name.trim().toLowerCase();
       this.address = this.store.address.trim().toLowerCase();
       this.specialization = this.store.specialization.trim().toLowerCase();
-    }, fetchMedia() {
+    },
+    fetchMedia() {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       axios
         .get(`http://localhost:8000/api/votes/${this.doctor.id}/doctors`)
@@ -31,7 +31,7 @@ export default {
           // In res.data arrivano i dati della chiamata da axios
           this.media = res.data;
         })
-        // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
+
         .catch((err) => {
           console.error(err);
         });
@@ -39,10 +39,10 @@ export default {
     getStar() {
       let message = "";
       for (let i = 0; i < 5; i++)
-        if (this.media.media && i < this.media.media) {
-          message += " &#9733 "
-        } else message += " &#9734 "
-      return message
+        if (this.media && i < this.media) {
+          message += " &#9733 ";
+        } else message += " &#9734 ";
+      return message;
     },
   },
   computed: {
@@ -65,55 +65,48 @@ export default {
 
 <template>
   <!-- vedi se va -->
-  <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
-    <div class="card doctor-card text-bg-dark">
-      <img v-if="!doctor.photo"
-        src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg" class="card-img"
-        alt="..." />
-      <img v-else :src="'http://127.0.0.1:8000/storage/' + doctor.photo" class="card-img" alt="..." />
-      <div class="card-img-overlay overlay">
-        <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
-        <div class="d-flex justify-content-center mt-4">
-          <div v-for="specialization in doctor.specializations" class="badge me-3"
-            :style="{ backgroundColor: specialization.color }">
-            {{ specialization.name }}
+  <div v-if="voto <= this.media || voto === 0">
+    <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
+      <div class="card doctor-card text-bg-dark">
+        <img
+          v-if="!doctor.photo"
+          src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
+          class="card-img"
+          alt="..."
+        />
+        <img
+          v-else
+          :src="'http://127.0.0.1:8000/storage/' + doctor.photo"
+          class="card-img"
+          alt="..."
+        />
+        <div class="card-img-overlay overlay">
+          <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
+          <div class="d-flex justify-content-center mt-4">
+            <div
+              v-for="specialization in doctor.specializations"
+              class="badge me-3"
+              :style="{ backgroundColor: specialization.color }"
+            >
+              {{ specialization.name }}
+            </div>
+          </div>
+          <div class="doctor-info">
+            <p class="card-text">{{ doctor.address }}</p>
+            <p class="card-text">{{ doctor.city }}</p>
+            <p class="stars" v-html="getStar()"></p>
+            <p class="card-text">+39 {{ doctor.phone }}</p>
           </div>
         </div>
-        <div class="doctor-info">
-          <p class="card-text">{{ doctor.address }}</p>
-          <p class="card-text">{{ doctor.city }}</p>
-          <p v-html="getStar()"></p>
-          <p class="card-text">+39 {{ doctor.phone }}</p>
-        </div>
-        =======
-        <div v-if="voto <= this.media || voto === 0">
-          <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
-            <div class="card doctor-card text-bg-dark">
-              <img v-if="!doctor.photo"
-                src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
-                class="card-img" alt="..." />
-              <img v-else :src="doctor.photo" class="card-img" alt="..." />
-              <div class="card-img-overlay overlay">
-                <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
-                <div class="d-flex justify-content-center mt-4">
-                  <div v-for="specialization in doctor.specializations" class="badge me-3"
-                    :style="{ backgroundColor: specialization.color }">
-                    {{ specialization.name }}
-                  </div>
-                </div>
-                <div class="doctor-info">
-                  <p class="card-text">{{ doctor.address }}</p>
-                  <p class="card-text">{{ doctor.city }}</p>
-                  <p class="card-text">+39 {{ doctor.phone }}</p>
-                </div>
-              </div>
-              >>>>>>> 3abc3e27c26abbc7632b729ef26b118563a70816
-            </div>
-          </router-link>
-        </div>
+      </div>
+    </router-link>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.stars {
+  color: yellow;
+}
 .doctor-card {
   width: 400px;
   position: relative;
