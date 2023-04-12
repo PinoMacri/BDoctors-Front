@@ -43,9 +43,11 @@ export default {
     <div class="user d-flex align-items-center">
       <div class="circle">
         <img v-if="this.doctor.photo" :src="this.doctor.photo" alt="" />
-        <img v-else
+        <img
+          v-else
           src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg"
-          alt="" />
+          alt=""
+        />
       </div>
       <div class="info me-5 ms-4">
         <h1 class="mt-3">{{ doctor.user.name }}</h1>
@@ -54,9 +56,14 @@ export default {
         <i class="fa-solid fa-star" style="color: #faf200"></i>
         <i class="fa-solid fa-star" style="color: #faf200"></i>
         <i class="fa-solid fa-star" style="color: #faf200"></i>
-        <div class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4">
-          <div v-for="specialization in doctor.specializations" class="badge me-3 mb-3"
-            :style="{ backgroundColor: specialization.color }">
+        <div
+          class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4"
+        >
+          <div
+            v-for="specialization in doctor.specializations"
+            class="badge me-3 mb-3"
+            :style="{ backgroundColor: specialization.color }"
+          >
             {{ specialization.name }}
           </div>
         </div>
@@ -65,7 +72,17 @@ export default {
     <div class="contacts">
       <h4 class="phone mt-3">Phone: +39 {{ doctor.phone }}</h4>
       <h6 class="location me-5">Location: {{ doctor.address }}</h6>
-      <a :href="formatAddress" target="_blank" class="location me-5">View on map</a>
+      <a :href="formatAddress" target="_blank" class="location me-5"
+        >View on map</a
+      >
+    </div>
+    <div class="message-review-vote">
+      <router-link
+        :doctor="doctor.id"
+        :to="{ name: 'contact' }"
+        class="btn btn-sm btn-primary me-3"
+        >Contact me</router-link
+      >
     </div>
   </div>
   <hr />
