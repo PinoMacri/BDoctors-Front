@@ -6,4 +6,5 @@ export const store = reactive({
   specialization: "",
   vote: "",
   city: "",
+  review: [],
 });

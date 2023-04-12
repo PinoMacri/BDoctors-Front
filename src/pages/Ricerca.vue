@@ -59,6 +59,7 @@ export default {
       this.updateSpecialization();
       this.updateCity();
     },
+
     fetchSpecializations() {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       axios

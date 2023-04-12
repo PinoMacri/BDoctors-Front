@@ -15,6 +15,7 @@ export default {
       specialization: "",
       sum: 0,
       media: 0,
+      review: 0,
     };
   },
   methods: {
@@ -55,10 +56,17 @@ export default {
       this.media = sum / this.doctor.votes.length;
       return this.media;
     },
+    counting() {
+      this.doctor.review.forEach(() => {
+        this.review += 1;
+      });
+      return this.store.review.push(this.review);
+    },
   },
   created() {
     this.fill();
     this.getMedia;
+    this.counting;
   },
 };
 </script>
