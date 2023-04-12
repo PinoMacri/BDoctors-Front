@@ -23,6 +23,7 @@ export default {
       id: 0,
       recensione: "",
       reviews: 0,
+      reviewNumber: 0,
     };
   },
   methods: {
@@ -61,6 +62,7 @@ export default {
       this.updateSpecialization();
       this.updateCity();
     },
+
     fetchSpecializations() {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       axios
@@ -87,6 +89,17 @@ export default {
           console.error(err);
         });
     },
+    // sortByReview() {
+    //   if (this.recensione === "max") {
+    //     this.store.review.sort((a, b) => a - b);
+    //     console.log(this.store.review);
+    //   } else if (this.recensione === "min") {
+    //     this.store.review.sort((a, b) => b - a);
+    //     console.log(this.store.review);
+    //   } else {
+    //     console.log(this.store.review);
+    //   }
+    // },
   },
   computed: {
     filter() {
@@ -171,6 +184,13 @@ export default {
             {{ vote.label }}
           </option>
         </select>
+
+        <select v-model="reviewNumber" class="specializzazione" aria-label="Default select example">
+          <option :value="0" selected>Recensioni</option>
+          <option :value="0">Tutti</option>
+          <option :value="2">Più di 2 recensioni</option>
+          <option :value="4">Più di 4 recensioni</option>
+        </select>
       </div>
       <div class="">
         <select v-model="recensione" class="specializzazione" aria-label="Default select example">
@@ -186,7 +206,11 @@ export default {
     </div>
 
     <div class="doctors-list d-flex justify-content-start flex-wrap mb-5">
-      <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto" />
+
+
+      <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto"
+        :reviewNumber="reviewNumber" />
+
     </div>
   </div>
 </template>
