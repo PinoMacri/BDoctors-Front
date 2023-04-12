@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       voto: 0,
+      reviewNumber: 0,
     };
   },
 };
@@ -22,6 +23,7 @@ export default {
         :key="doctor.id"
         :doctor="doctor"
         :voto="voto"
+        :reviewNumber="reviewNumber"
       />
     </div>
   </div>
