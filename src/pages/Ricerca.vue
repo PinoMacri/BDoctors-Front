@@ -21,6 +21,7 @@ export default {
       city: "",
       media: 0,
       id: 0,
+      reviewNumber: 0,
     };
   },
   methods: {
@@ -86,6 +87,17 @@ export default {
           console.error(err);
         });
     },
+    // sortByReview() {
+    //   if (this.recensione === "max") {
+    //     this.store.review.sort((a, b) => a - b);
+    //     console.log(this.store.review);
+    //   } else if (this.recensione === "min") {
+    //     this.store.review.sort((a, b) => b - a);
+    //     console.log(this.store.review);
+    //   } else {
+    //     console.log(this.store.review);
+    //   }
+    // },
   },
   computed: {
     filter() {
@@ -176,9 +188,21 @@ export default {
           aria-label="Default select example"
         >
           <option :value="0" selected>Voto</option>
+          <option :value="0">Nessun voto</option>
           <option :value="vote.value" v-for="vote in votes">
             {{ vote.label }}
           </option>
+        </select>
+
+        <select
+          v-model="reviewNumber"
+          class="specializzazione"
+          aria-label="Default select example"
+        >
+          <option :value="0" selected>Recensioni</option>
+          <option :value="0">Tutti</option>
+          <option :value="2">Più di 2 recensioni</option>
+          <option :value="4">Più di 4 recensioni</option>
         </select>
       </div>
     </div>
@@ -189,6 +213,7 @@ export default {
         :key="doctor.id"
         :doctor="doctor"
         :voto="voto"
+        :reviewNumber="reviewNumber"
       />
     </div>
   </div>
