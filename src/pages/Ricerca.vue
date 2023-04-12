@@ -21,6 +21,8 @@ export default {
       city: "",
       media: 0,
       id: 0,
+      recensione: "",
+      reviews: 0,
     };
   },
   methods: {
@@ -124,11 +126,13 @@ export default {
         });
       } else return this.doctors;
     },
+
   },
   created() {
     this.fetchDoctors();
     this.fetchSpecializations();
     this.fetchVotes();
+
   },
 };
 </script>
@@ -142,22 +146,13 @@ export default {
       <div>
         <form @submit.prevent class="d-flex filtri" action="">
           <div>
-            <input
-              class="nome-dottore"
-              v-model.trim="name"
-              placeholder="Nome Dottore"
-              type="text"
-            />
+            <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
           </div>
           <div class="citta-dottore">
             <input v-model.trim="city" placeholder="Città" type="text" />
           </div>
           <div class="specializzazione-dottore">
-            <select
-              v-model="specialization"
-              class="specializzazione"
-              aria-label="Default select example"
-            >
+            <select v-model="specialization" class="specializzazione" aria-label="Default select example">
               <option value="" selected>Specializzazione</option>
               <option v-for="specialization in specializations">
                 {{ specialization.name }}
@@ -169,26 +164,29 @@ export default {
       </div>
 
       <div class="">
-        <select
-          v-model="voto"
-          class="specializzazione"
-          aria-label="Default select example"
-        >
+        <select v-model="voto" class="specializzazione" aria-label="Default select example">
           <option :value="0" selected>Voto</option>
+          <option :value="0">Nessun voto</option>
           <option :value="vote.value" v-for="vote in votes">
             {{ vote.label }}
+          </option>
+        </select>
+      </div>
+      <div class="">
+        <select v-model="recensione" class="specializzazione" aria-label="Default select example">
+          <option value="" selected>Recensioni</option>
+          <option>
+            Ordine crescente
+          </option>
+          <option>
+            Ordine decrescente
           </option>
         </select>
       </div>
     </div>
 
     <div class="doctors-list d-flex justify-content-start flex-wrap mb-5">
-      <DoctorsCard
-        v-for="(doctor, i) in filter"
-        :key="doctor.id"
-        :doctor="doctor"
-        :voto="voto"
-      />
+      <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto" />
     </div>
   </div>
 </template>
