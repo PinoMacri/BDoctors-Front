@@ -45,7 +45,7 @@ export default {
           console.error(err);
         })
         .then(() => {
-          location.href = `http://localhost:5174/doctors/${this.doctor.id}`;
+          location.reload();
         });
     },
     getStar() {
