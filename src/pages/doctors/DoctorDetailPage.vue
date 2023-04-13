@@ -87,7 +87,11 @@ export default {
   <div class="d-flex align-items-center justify-content-between mt-3">
     <div class="user d-flex align-items-center">
       <div class="circle">
-        <img v-if="this.doctor.photo" :src="this.doctor.photo" alt="" />
+        <img
+          v-if="doctor.photo"
+          :src="'http://127.0.0.1:8000/storage/' + doctor.photo"
+          alt=""
+        />
         <img
           v-else
           src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg"
@@ -192,10 +196,6 @@ export default {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  background-image: url("https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .specialization {
