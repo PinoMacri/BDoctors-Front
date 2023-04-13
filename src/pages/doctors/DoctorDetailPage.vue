@@ -76,12 +76,16 @@ export default {
         >View on map</a
       >
     </div>
-    <div class="message-review-vote">
+    <div class="message-review-vote d-flex flex-column">
       <router-link
-        :doctor="doctor.id"
         :to="{ name: 'contact' }"
-        class="btn btn-sm btn-primary me-3"
+        class="btn btn-sm btn-primary me-3 mb-2"
         >Contact me</router-link
+      >
+      <router-link
+        :to="{ name: 'review' }"
+        class="btn btn-sm btn-secondary me-3 mb-2"
+        >Leave a review</router-link
       >
     </div>
   </div>

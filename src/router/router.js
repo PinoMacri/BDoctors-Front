@@ -15,6 +15,7 @@ import Ricerca from "../pages/Ricerca.vue";
 import Rare from "../components/articoli/Rare.vue";
 import AdvancedSearchPage from "../pages/AdvancedSearchPage.vue";
 import ContactPage from "../pages/ContactPage.vue";
+import ReviewPage from "../pages/ReviewPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -70,6 +71,11 @@ const router = createRouter({
       path: "/contact/:id",
       name: "contact",
       component: ContactPage,
+    },
+    {
+      path: "/review/:id",
+      name: "review",
+      component: ReviewPage,
     },
     { path: "/:pathMatch(.*)", redirect: "/" },
   ],

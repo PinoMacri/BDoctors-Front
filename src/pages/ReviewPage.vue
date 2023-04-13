@@ -1,12 +1,11 @@
 <script>
 import axios from "axios";
 
-const endpoint = "http://127.0.0.1:8000/api/messageMail";
+const endpoint = "http://127.0.0.1:8000/api/review";
 const emptyForm = {
   doctor_id: "",
-  sender: "",
-  subject: "",
-  message: "",
+  name: "",
+  text: "",
 };
 export default {
   name: "ContactPage",
@@ -22,9 +21,8 @@ export default {
         .then(() => {
           this.form = {
             doctor_id: "",
-            sender: "",
-            subject: "",
-            message: "",
+            name: "",
+            text: "",
           };
         })
         .catch((err) => {
@@ -39,7 +37,7 @@ export default {
       let id = this.doctor.split("/");
       this.form.doctor_id = id[2];
       this.doctor = id[2];
-      console.log(this.form.doctor_id);
+      console.log(this.doctor);
     },
   },
 };
@@ -47,58 +45,46 @@ export default {
 
 <template>
   <div class="container p-2">
-    <h1 class="text-white">Contact us!</h1>
+    <h1 class="text-white">Leave us a review</h1>
     <!-- Prevent e intercetta il method sendform -->
     <form @submit.prevent="sendForm" class="text-white py-5" novalidate>
       <!-- EMAIL -->
       <div class="mb-3">
-        <label for="sender" class="form-label text-dark"
-          >Email address<sup class="text-danger">*</sup></label
+        <label for="name" class="form-label text-dark"
+          >Full name<sup class="text-danger">*</sup></label
         >
         <input
           @keyup="this.getId()"
-          type="email"
-          class="form-control"
-          id="sender"
-          name="sender"
-          aria-describedby="name@example.com"
-          v-model.trim="form.sender"
-          required
-        />
-        <small class="text-muted form-text">Your email</small>
-      </div>
-
-      <!-- OGGETTO -->
-      <div class="mb-3">
-        <label for="subject" class="form-label text-dark"
-          >Email Subject<sup class="text-danger">*</sup></label
-        >
-        <input
           type="text"
           class="form-control"
-          id="subject"
-          name="subject"
-          v-model.trim="form.subject"
+          id="name"
+          name="name"
+          aria-describedby="name@example.com"
+          v-model.trim="form.name"
           required
         />
+        <small class="text-muted form-text">Your full name</small>
       </div>
 
       <!-- CONTENUTO DEL MESSAGGIO -->
       <div class="mb-3">
-        <label for="message" class="form-label text-dark"
-          >Message<sup class="text-danger">*</sup></label
+        <label for="text" class="form-label text-dark"
+          >Review<sup class="text-danger">*</sup></label
         >
         <textarea
           class="form-control"
           rows="3"
-          name="message"
-          id="message"
-          v-model.trim="form.message"
+          name="text"
+          id="text"
+          v-model.trim="form.text"
           required
         ></textarea>
       </div>
+
       <div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button @click="redirect" type="submit" class="btn btn-primary">
+          Submit
+        </button>
       </div>
     </form>
   </div>
