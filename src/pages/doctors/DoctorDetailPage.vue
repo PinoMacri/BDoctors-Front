@@ -8,6 +8,7 @@ export default {
   data: () => {
     return {
       doctor: [],
+      media: 0,
     };
   },
   components: { ReviewCard },
@@ -23,6 +24,15 @@ export default {
           this.$router.push({ name: "not-found" });
         });
     },
+    getStar() {
+      let roundedMedia = Math.floor(this.media);
+      let message = "";
+      for (let i = 0; i < 5; i++)
+        if (roundedMedia && i < roundedMedia) {
+          message += " &#9733 ";
+        } else message += " &#9734 ";
+      return message;
+    },
   },
   computed: {
     formatAddress() {
@@ -31,10 +41,21 @@ export default {
       const address = `https://www.google.com/maps/search/?api=1&query=${location}`;
       return address;
     },
+    getMedia() {
+      let sum = 0;
+      this.doctor.votes.forEach((vote) => {
+        sum = sum + vote.value;
+      });
+      this.media = sum / this.doctor.votes.length;
+      return this.media;
+    },
   },
   created() {
     this.getDoctor();
-  },
+  }, mounted() {
+    this.getMedia;
+
+  }
 };
 </script>
 
@@ -49,11 +70,8 @@ export default {
       </div>
       <div class="info me-5 ms-4">
         <h1 class="mt-3">{{ doctor.user.name }}</h1>
-        <i class="fa-solid fa-star" style="color: #faf200"></i>
-        <i class="fa-solid fa-star" style="color: #faf200"></i>
-        <i class="fa-solid fa-star" style="color: #faf200"></i>
-        <i class="fa-solid fa-star" style="color: #faf200"></i>
-        <i class="fa-solid fa-star" style="color: #faf200"></i>
+        <p class="stars" v-html="getStar()"></p>
+
         <div class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4">
           <div v-for="specialization in doctor.specializations" class="badge me-3 mb-3"
             :style="{ backgroundColor: specialization.color }">
@@ -69,10 +87,14 @@ export default {
     </div>
   </div>
   <hr />
-  <ReviewCard v-for="review in doctor.review" :review="review" />
+  <ReviewCard v-for="review in doctor.review" :review="review" :doctor="doctor" />
 </template>
 
 <style scoped lang="scss">
+.stars {
+  color: black !important;
+}
+
 .circle {
   margin: 0 20px;
   width: 160px;
