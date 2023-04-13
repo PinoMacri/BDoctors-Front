@@ -109,6 +109,8 @@ export default {
 
 .doctor-card {
   width: 400px;
+  height: 265.33px;
+  overflow: hidden;
   position: relative;
 
   .overlay {
