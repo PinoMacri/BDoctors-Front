@@ -183,14 +183,13 @@ export default {
         </form>
       </div>
 
-      <div class="">
+      <div>
         <select
           v-model="voto"
           class="specializzazione"
           aria-label="Default select example"
         >
           <option :value="0" selected>Voto</option>
-          <option :value="0">Nessun voto</option>
           <option :value="vote.value" v-for="vote in votes">
             {{ vote.label }}
           </option>

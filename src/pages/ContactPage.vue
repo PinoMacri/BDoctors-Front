@@ -47,12 +47,12 @@ export default {
 
 <template>
   <div class="container p-2">
-    <h1 class="text-white">Contact us!</h1>
+    <h1>Contact us!</h1>
     <!-- Prevent e intercetta il method sendform -->
-    <form @submit.prevent="sendForm" class="text-white py-5" novalidate>
+    <form @submit.prevent="sendForm" class="py-5" novalidate>
       <!-- EMAIL -->
       <div class="mb-3">
-        <label for="sender" class="form-label text-dark"
+        <label for="sender" class="form-label"
           >Email address<sup class="text-danger">*</sup></label
         >
         <input
@@ -70,7 +70,7 @@ export default {
 
       <!-- OGGETTO -->
       <div class="mb-3">
-        <label for="subject" class="form-label text-dark"
+        <label for="subject" class="form-label"
           >Email Subject<sup class="text-danger">*</sup></label
         >
         <input
@@ -85,7 +85,7 @@ export default {
 
       <!-- CONTENUTO DEL MESSAGGIO -->
       <div class="mb-3">
-        <label for="message" class="form-label text-dark"
+        <label for="message" class="form-label"
           >Message<sup class="text-danger">*</sup></label
         >
         <textarea

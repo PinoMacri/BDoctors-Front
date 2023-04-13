@@ -45,12 +45,12 @@ export default {
 
 <template>
   <div class="container p-2">
-    <h1 class="text-white">Leave us a review</h1>
+    <h1>Leave us a review</h1>
     <!-- Prevent e intercetta il method sendform -->
-    <form @submit.prevent="sendForm" class="text-white py-5" novalidate>
+    <form @submit.prevent="sendForm" class="py-5" novalidate>
       <!-- EMAIL -->
       <div class="mb-3">
-        <label for="name" class="form-label text-dark"
+        <label for="name" class="form-label"
           >Full name<sup class="text-danger">*</sup></label
         >
         <input
@@ -68,7 +68,7 @@ export default {
 
       <!-- CONTENUTO DEL MESSAGGIO -->
       <div class="mb-3">
-        <label for="text" class="form-label text-dark"
+        <label for="text" class="form-label"
           >Review<sup class="text-danger">*</sup></label
         >
         <textarea
