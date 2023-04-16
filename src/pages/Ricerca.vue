@@ -2,12 +2,13 @@
 import { store } from "../data/store";
 import DoctorsCard from "../components/doctors/DoctorsCard.vue";
 import axios from "axios";
+import AppLoader from "../components/AppLoader.vue";
 const apiBaseUrl = "http://127.0.0.1:8000/api";
 const apiBaseUrlSpec = "http://localhost:8000/api/specializations";
 const apiBaseUrlVote = "http://localhost:8000/api/votes";
 export default {
   name: "Ricerca",
-  components: { DoctorsCard },
+  components: { DoctorsCard, AppLoader },
   data() {
     return {
       store,
@@ -21,6 +22,7 @@ export default {
       city: "",
       media: 0,
       id: 0,
+      isLoading: false,
       recensione: "",
       reviews: 0,
       reviewNumber: 0,
@@ -28,6 +30,7 @@ export default {
   },
   methods: {
     fetchDoctors(endpoint = null) {
+      this.isLoading = true;
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       if (!endpoint) endpoint = apiBaseUrl + "/doctors";
       axios
@@ -39,6 +42,9 @@ export default {
         // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
         .catch((err) => {
           console.error(err);
+        })
+        .then(() => {
+          this.isLoading = false;
         });
     },
     updateName() {
@@ -155,7 +161,8 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <AppLoader v-if="isLoading" />
+  <div v-else class="container">
     <h3 class="text-danger mt-4 mb-5 text-center">
       Tutti i nostri Specialisti
     </h3>
