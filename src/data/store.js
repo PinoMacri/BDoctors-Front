@@ -6,4 +6,6 @@ export const store = reactive({
   vote: "",
   city: "",
   review: [],
+  alert: "",
+  alertType: "",
 });

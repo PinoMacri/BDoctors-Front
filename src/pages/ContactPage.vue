@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-
+import { store } from "../data/store";
 const endpoint = "http://127.0.0.1:8000/api/messageMail";
 const emptyForm = {
   doctor_id: "",
@@ -14,6 +14,7 @@ export default {
     form: emptyForm,
     doctor: "",
     doctor_id: "",
+    store,
   }),
   methods: {
     sendForm() {
@@ -31,8 +32,13 @@ export default {
           console.error(err);
         })
         .then(() => {
+          this.updateAlert();
           window.history.back();
         });
+    },
+    updateAlert() {
+      this.store.alertType = "alert-success";
+      this.store.alert = "Mail inviata con successo!";
     },
     getId() {
       this.doctor = window.location.pathname;
@@ -52,23 +58,50 @@ export default {
     <form @submit.prevent="sendForm" class="py-5">
       <!-- EMAIL -->
       <div class="mb-3">
-        <label for="sender" class="form-label">Email address<sup class="text-danger">*</sup></label>
-        <input @keyup="this.getId()" type="email" class="form-control" id="sender" name="sender"
-          aria-describedby="name@example.com" v-model.trim="form.sender" required />
+        <label for="sender" class="form-label"
+          >Email address<sup class="text-danger">*</sup></label
+        >
+        <input
+          @keyup="this.getId()"
+          type="email"
+          class="form-control"
+          id="sender"
+          name="sender"
+          aria-describedby="name@example.com"
+          v-model.trim="form.sender"
+          required
+        />
         <small class="text-muted form-text">Your email</small>
       </div>
 
       <!-- OGGETTO -->
       <div class="mb-3">
-        <label for="subject" class="form-label">Email Subject<sup class="text-danger">*</sup></label>
-        <input type="text" class="form-control" id="subject" name="subject" v-model.trim="form.subject" required />
+        <label for="subject" class="form-label"
+          >Email Subject<sup class="text-danger">*</sup></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="subject"
+          name="subject"
+          v-model.trim="form.subject"
+          required
+        />
       </div>
 
       <!-- CONTENUTO DEL MESSAGGIO -->
       <div class="mb-3">
-        <label for="message" class="form-label">Message<sup class="text-danger">*</sup></label>
-        <textarea class="form-control" rows="3" name="message" id="message" v-model.trim="form.message"
-          required></textarea>
+        <label for="message" class="form-label"
+          >Message<sup class="text-danger">*</sup></label
+        >
+        <textarea
+          class="form-control"
+          rows="3"
+          name="message"
+          id="message"
+          v-model.trim="form.message"
+          required
+        ></textarea>
       </div>
       <div>
         <button type="submit" class="btn btn-primary">Submit</button>

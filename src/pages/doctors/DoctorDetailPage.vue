@@ -1,7 +1,7 @@
 <script>
 import ReviewCard from "../../components/ReviewCard.vue";
 import VoteCard from "../../components/VoteCard.vue";
-
+import { store } from "../../data/store";
 import axios from "axios";
 import AppLoader from "../../components/AppLoader.vue";
 const apiBaseUrl = "http://localhost:8000/api/";
@@ -13,10 +13,12 @@ export default {
       form: {
         vote_id: 0,
       },
+      store,
       isLoading: false,
       doctor: [],
       voto: 0,
       media: 0,
+      alert: false,
     };
   },
   components: { ReviewCard, VoteCard, AppLoader },
@@ -40,6 +42,9 @@ export default {
     changeVote() {
       this.form.vote_id = this.voto;
     },
+    updateAlert() {
+      alert("Voto inviato con successo!");
+    },
     sendForm() {
       axios
         .post(`http://127.0.0.1:8000/api/doctors/${this.doctor.id}`, this.form)
@@ -47,12 +52,12 @@ export default {
           this.form = {
             vote_id: this.voto,
           };
-          console.log(this.form);
         })
         .catch((err) => {
           console.error(err);
         })
         .then(() => {
+          this.updateAlert();
           location.reload();
         });
     },
@@ -89,6 +94,26 @@ export default {
 </script>
 
 <template>
+  <div
+    v-if="this.store.alert"
+    :is-open="isALertOpen"
+    @close="isALertOpen = false"
+    class="container"
+  >
+    <div
+      class="alert alert-dismissible fade show my-5"
+      :class="this.store.alertType"
+      role="alert"
+    >
+      {{ this.store.alert }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
   <AppLoader v-if="isLoading === true" />
   <div v-else>
     <div class="d-flex align-items-center justify-content-between mt-3">
