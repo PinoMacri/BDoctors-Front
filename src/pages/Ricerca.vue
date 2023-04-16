@@ -16,7 +16,7 @@ export default {
       name: "",
       address: "",
       specialization: "",
-      voto: 0,
+      voto: 1,
       votes: [],
       city: "",
       media: 0,
@@ -51,9 +51,6 @@ export default {
       this.store.specialization = this.specialization;
     },
     updateCity() {
-      this.store.city = this.city;
-    },
-    updateVote() {
       this.store.city = this.city;
     },
     onButtonClicked() {
@@ -139,12 +136,21 @@ export default {
         });
       } else return this.doctors;
     },
+    updateValue() {
+      this.name = this.store.name;
+      this.city = this.store.city;
+      this.specialization = this.store.specialization;
+    },
   },
   created() {
     this.fetchDoctors();
     this.fetchSpecializations();
     this.fetchVotes();
+    this.updateValue;
   },
+  // mounted() {
+  //   this.filter;
+  // },
 };
 </script>
 
@@ -179,7 +185,7 @@ export default {
               </option>
             </select>
           </div>
-          <button @click="onButtonClicked">Cerca</button>
+          <button type="button" @click="onButtonClicked">Cerca</button>
         </form>
       </div>
 
@@ -189,7 +195,6 @@ export default {
           class="specializzazione"
           aria-label="Default select example"
         >
-          <option :value="0" selected>Voto</option>
           <option :value="vote.value" v-for="vote in votes">
             {{ vote.label }}
           </option>
@@ -200,10 +205,12 @@ export default {
           class="specializzazione"
           aria-label="Default select example"
         >
-          <option :value="0" selected>Recensioni</option>
-          <option :value="0">Tutti</option>
+          <option :value="0" selected>Tutti</option>
           <option :value="2">Più di 2 recensioni</option>
-          <option :value="4">Più di 4 recensioni</option>
+          <option :value="6">Più di 6 recensioni</option>
+          <option :value="8">Più di 8 recensioni</option>
+          <option :value="10">Più di 10 recensioni</option>
+          <option :value="12">Più di 12 recensioni</option>
         </select>
       </div>
     </div>
