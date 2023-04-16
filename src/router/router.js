@@ -16,9 +16,12 @@ import Rare from "../components/articoli/Rare.vue";
 import AdvancedSearchPage from "../pages/AdvancedSearchPage.vue";
 import ContactPage from "../pages/ContactPage.vue";
 import ReviewPage from "../pages/ReviewPage.vue";
+import NotFoundPage from "../pages/NotFoundPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
+  linkActiveClass: "active",
+  linkExactActiveClass: "active",
   routes: [
     { path: "/", name: "home", component: HomePage },
     { path: "/ricerca", name: "ricerca", component: Ricerca },
@@ -77,7 +80,7 @@ const router = createRouter({
       name: "review",
       component: ReviewPage,
     },
-    { path: "/:pathMatch(.*)", redirect: "/" },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFoundPage },
   ],
 });
 export { router };

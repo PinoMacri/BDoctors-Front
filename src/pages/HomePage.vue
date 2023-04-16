@@ -37,7 +37,6 @@ export default {
         .then((res) => {
           // In res.data arrivano i dati della chiamata da axios
           this.doctors = res.data;
-
         })
         // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
         .catch((err) => {
@@ -49,10 +48,9 @@ export default {
     sponsoredDoctor() {
       return this.doctors.filter((doctor) => {
         if (doctor.is_sponsored) {
-          return true
-
+          return true;
         }
-      })
+      });
     },
   },
   created() {

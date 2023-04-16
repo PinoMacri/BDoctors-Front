@@ -1,7 +1,9 @@
 <script>
 import ReviewCard from "../../components/ReviewCard.vue";
 import VoteCard from "../../components/VoteCard.vue";
+
 import axios from "axios";
+import AppLoader from "../../components/AppLoader.vue";
 const apiBaseUrl = "http://localhost:8000/api/";
 
 export default {
@@ -16,7 +18,7 @@ export default {
       media: 0,
     };
   },
-  components: { ReviewCard, VoteCard },
+  components: { ReviewCard, VoteCard, AppLoader },
   methods: {
     getDoctor() {
       const endpoint = apiBaseUrl + "doctors/" + this.$route.params.id;
@@ -84,7 +86,8 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex align-items-center justify-content-between mt-3">
+  <AppLoader v-if="isLoading === true" />
+  <div v-else class="d-flex align-items-center justify-content-between mt-3">
     <div class="user d-flex align-items-center">
       <div class="circle">
         <img

@@ -15,25 +15,29 @@ export default {
   },
   methods: {
     fetchDoctors(endpoint = null) {
+      this.isLoading = true;
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       if (!endpoint) endpoint = apiBaseUrl + "/doctors";
       axios
         .get(endpoint)
         .then((res) => {
           // In res.data arrivano i dati della chiamata da axios
-          this.doctors = res.data
+          this.doctors = res.data;
         })
         // Controllo con catch se ci sono errori
         .catch((err) => {
           console.error(err);
+        })
+        .then(() => {
+          this.isLoading = false;
         });
     },
   },
   computed: {
     sponsoredDoctor() {
       this.doctors.filter((doctor) => {
-        if (doctor.is_sponsored) return true
-      })
+        if (doctor.is_sponsored) return true;
+      });
     },
   },
   created() {
@@ -46,7 +50,11 @@ export default {
   <div class="container">
     <h3 class="text-danger mt-4 mb-5 text-center">Dottori Trovati</h3>
     <div class="doctors-list d-flex justify-content-start flex-wrap mb-5">
-      <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" />
+      <DoctorsCard
+        v-for="(doctor, i) in filter"
+        :key="doctor.id"
+        :doctor="doctor"
+      />
     </div>
   </div>
 </template>
