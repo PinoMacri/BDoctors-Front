@@ -121,7 +121,39 @@ export default {
               .includes(this.store.specialization.toLowerCase())
           );
         });
-      } else if (this.store.name) {
+      } else if (this.store.name && this.store.city) {
+        return this.doctors.filter((doctor) => {
+          return doctor.user.name
+            .toLowerCase()
+            .includes(this.store.name.toLowerCase()) &&
+            doctor.city.toLowerCase().includes(this.store.city.toLowerCase());
+        });
+      }
+      else if (this.store.name && this.store.specialization) {
+        return this.doctors.filter((doctor) => {
+          return doctor.user.name
+            .toLowerCase()
+            .includes(this.store.name.toLowerCase()) &&
+            doctor.specializations
+              .map((specialization) => {
+                return specialization.name.toLowerCase();
+              })
+              .includes(this.store.specialization.toLowerCase())
+        });
+      }
+      else if (this.store.city && this.store.specialization) {
+        return this.doctors.filter((doctor) => {
+          return doctor.city
+            .toLowerCase()
+            .includes(this.store.city.toLowerCase()) &&
+            doctor.specializations
+              .map((specialization) => {
+                return specialization.name.toLowerCase();
+              })
+              .includes(this.store.specialization.toLowerCase())
+        });
+      }
+      else if (this.store.name) {
         return this.doctors.filter((doctor) => {
           return doctor.user.name
             .toLowerCase()
@@ -170,22 +202,14 @@ export default {
       </h3>
       <div class="d-lg-flex justify-content-between">
         <div class="mt-3 mb-3 mt-lg-0">
-          <select
-            v-model="voto"
-            class="select-voto"
-            aria-label="Default select example"
-          >
+          <select v-model="voto" class="select-voto" aria-label="Default select example">
             <option :value="0" selected>Voto</option>
             <option :value="vote.value" v-for="vote in votes">
               {{ vote.label }}
             </option>
           </select>
 
-          <select
-            v-model="reviewNumber"
-            class="select-recensione"
-            aria-label="Default select example"
-          >
+          <select v-model="reviewNumber" class="select-recensione" aria-label="Default select example">
             <option :value="0" selected>Tutti</option>
             <option :value="2">Più di 2 recensioni</option>
             <option :value="6">Più di 6 recensioni</option>
@@ -199,27 +223,13 @@ export default {
           <form @submit.prevent class="filtri" action="">
             <div class="d-flex">
               <div>
-                <input
-                  class="nome-dottore"
-                  v-model.trim="name"
-                  placeholder="Nome Dottore"
-                  type="text"
-                />
+                <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
               </div>
               <div>
-                <input
-                  class="citta-dottore"
-                  v-model.trim="city"
-                  placeholder="Città"
-                  type="text"
-                />
+                <input class="citta-dottore" v-model.trim="city" placeholder="Città" type="text" />
               </div>
               <div class="specializzazione-dottore">
-                <select
-                  v-model="specialization"
-                  class="specializzazione"
-                  aria-label="Default select example"
-                >
+                <select v-model="specialization" class="specializzazione" aria-label="Default select example">
                   <option value="" selected>Specializzazione</option>
                   <option v-for="specialization in specializations">
                     {{ specialization.name }}
@@ -237,16 +247,9 @@ export default {
         </div>
       </div>
 
-      <div
-        class="doctors-list d-flex justify-content-center mt-3 justify-content-lg-start flex-wrap mb-5"
-      >
-        <DoctorsCard
-          v-for="(doctor, i) in filter"
-          :key="doctor.id"
-          :doctor="doctor"
-          :voto="voto"
-          :reviewNumber="reviewNumber"
-        />
+      <div class="doctors-list d-flex justify-content-center mt-3 justify-content-lg-start flex-wrap mb-5">
+        <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto"
+          :reviewNumber="reviewNumber" />
       </div>
     </div>
   </div>
@@ -269,11 +272,9 @@ select {
 
 .ricerca-body {
   height: 100%;
-  background-image: linear-gradient(
-    to bottom,
-    rgb(109, 166, 212),
-    rgb(255, 255, 255)
-  );
+  background-image: linear-gradient(to bottom,
+      rgb(109, 166, 212),
+      rgb(255, 255, 255));
 }
 
 .select-recensione {
