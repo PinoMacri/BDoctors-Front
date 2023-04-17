@@ -17,16 +17,10 @@ export default {
         <div class="row justify-content-center flex-xs-column flex-lg-row">
           <div class="col-xs-12 col-lg-6 text-center">
             <div>
-              <img
-                class="img-sezione-dottore mb-5"
-                src="../../../public/6-1.png"
-                alt=""
-              />
+              <img class="img-sezione-dottore mb-5" src="../../../public/6-1.png" alt="" />
               <div class="profile-xs mb-3">
-                <a class="btn" href=""
-                  >Inserisci il tuo Profilo
-                  <i class="ms-1 fa-solid fa-arrow-right"></i
-                ></a>
+                <a class="btn" href="http://127.0.0.1:8000/register">Inserisci il tuo Profilo
+                  <i class="ms-1 fa-solid fa-arrow-right"></i></a>
               </div>
             </div>
           </div>
@@ -42,11 +36,7 @@ export default {
             <div>
               <div class="d-flex pt-3">
                 <div>
-                  <img
-                    class="conoscere"
-                    src="../../../public/pngwing.com (34).png"
-                    alt=""
-                  />
+                  <img class="conoscere" src="../../../public/pngwing.com (34).png" alt="" />
                 </div>
                 <div class="ms-3">
                   <h5>Fatti conoscere</h5>
@@ -61,11 +51,7 @@ export default {
               </div>
               <div class="d-flex pt-3">
                 <div>
-                  <img
-                    class="conoscere"
-                    src="../../../public/pngwing.com (38).png"
-                    alt=""
-                  />
+                  <img class="conoscere" src="../../../public/pngwing.com (38).png" alt="" />
                 </div>
                 <div class="ms-3">
                   <h5>Fatti trovare</h5>
@@ -79,11 +65,7 @@ export default {
               </div>
               <div class="d-flex pt-3">
                 <div>
-                  <img
-                    class="conoscere"
-                    src="../../../public/pngwing.com (36).png"
-                    alt=""
-                  />
+                  <img class="conoscere" src="../../../public/pngwing.com (36).png" alt="" />
                 </div>
                 <div class="ms-3">
                   <h5>Fatti recensire</h5>
@@ -96,10 +78,8 @@ export default {
                 </div>
               </div>
               <div class="d-flex justify-content-end mt-5 mb-0">
-                <a class="btn profile" href=""
-                  >Inserisci il tuo Profilo
-                  <i class="ms-1 fa-solid fa-arrow-right"></i
-                ></a>
+                <a class="btn profile" href="http://127.0.0.1:8000/register">Inserisci il tuo Profilo
+                  <i class="ms-1 fa-solid fa-arrow-right"></i></a>
               </div>
             </div>
           </div>
@@ -183,7 +163,9 @@ export default {
   }
 
   color: white !important;
-  box-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
+  box-shadow: 1px 1px 2px rgb(190, 185, 185),
+  0 0 1em blue,
+  0 0 0.2em red;
   background: linear-gradient(to right, #00ccff, #094088, #0e80dd);
   background-size: 600% 100%;
   animation: gradient 10s ease infinite;

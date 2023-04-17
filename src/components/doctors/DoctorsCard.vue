@@ -76,27 +76,16 @@ export default {
   <div v-if="reviewNumber <= this.review || reviewNumber === 0">
     <div v-if="voto <= this.media || voto === 1">
       <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
-        <div class="card doctor-card text-bg-dark">
-          <img
-            v-if="!doctor.photo"
+        <div class="card doctor-card mb-0 mt-4 text-bg-dark">
+          <img v-if="!doctor.photo"
             src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
-            class="card-img"
-            alt="..."
-          />
-          <img
-            v-else
-            :src="'http://127.0.0.1:8000/storage/' + doctor.photo"
-            class="card-img"
-            alt="..."
-          />
+            class="card-img" alt="..." />
+          <img v-else :src="'http://127.0.0.1:8000/storage/' + doctor.photo" class="card-img" alt="..." />
           <div class="card-img-overlay overlay">
             <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
             <div class="d-flex justify-content-center mt-4">
-              <div
-                v-for="specialization in doctor.specializations"
-                class="badge me-3"
-                :style="{ backgroundColor: specialization.color }"
-              >
+              <div v-for="specialization in doctor.specializations" class="badge me-3"
+                :style="{ backgroundColor: specialization.color }">
                 {{ specialization.name }}
               </div>
             </div>
@@ -123,6 +112,14 @@ export default {
   height: 265.33px;
   overflow: hidden;
   position: relative;
+  transition: 1s;
+
+
+
+  &:hover {
+    box-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
+    transform: scale(1.1);
+  }
 
   .overlay {
     background-color: rgba(0, 0, 0, 0.4);
