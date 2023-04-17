@@ -1,7 +1,9 @@
 <script>
 import ReviewCard from "../../components/ReviewCard.vue";
 import VoteCard from "../../components/VoteCard.vue";
+import { store } from "../../data/store";
 import axios from "axios";
+import AppLoader from "../../components/AppLoader.vue";
 const apiBaseUrl = "http://localhost:8000/api/";
 
 export default {
@@ -11,14 +13,18 @@ export default {
       form: {
         vote_id: 0,
       },
+      store,
+      isLoading: false,
       doctor: [],
       voto: 0,
       media: 0,
+      alert: false,
     };
   },
-  components: { ReviewCard, VoteCard },
+  components: { ReviewCard, VoteCard, AppLoader },
   methods: {
     getDoctor() {
+      this.isLoading = true;
       const endpoint = apiBaseUrl + "doctors/" + this.$route.params.id;
       axios
         .get(endpoint)
@@ -27,10 +33,17 @@ export default {
         })
         .catch(() => {
           this.$router.push({ name: "not-found" });
+        })
+        .then(() => {
+          this.isLoading = false;
+          this.getMedia;
         });
     },
     changeVote() {
       this.form.vote_id = this.voto;
+    },
+    updateAlert() {
+      alert("Voto inviato con successo!");
     },
     sendForm() {
       axios
@@ -39,12 +52,12 @@ export default {
           this.form = {
             vote_id: this.voto,
           };
-          console.log(this.form);
         })
         .catch((err) => {
           console.error(err);
         })
         .then(() => {
+          this.updateAlert();
           location.reload();
         });
     },
@@ -76,9 +89,6 @@ export default {
   },
   created() {
     this.getDoctor();
-  },
-  mounted() {
-    this.getMedia;
   },
 };
 </script>
@@ -215,10 +225,72 @@ export default {
         <h1 class="text-light m-0 rounded-top">Voti</h1>
       </div>
       <div class="vote-wrapper">
-        <VoteCard v-for="vote in doctor.votes" :vote="vote" />
-      </div>
-    </div>
-  </div>
+        <div v-if="this.store.alert" :is-open="isALertOpen" @close="isALertOpen = false" class="container">
+          <div class="alert alert-dismissible fade show my-5" :class="this.store.alertType" role="alert">
+            {{ this.store.alert }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        <AppLoader v-if="isLoading === true" />
+        <div v-else>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="user d-flex align-items-center">
+              <div class="circle">
+                <img v-if="doctor.photo" :src="'http://127.0.0.1:8000/storage/' + doctor.photo" alt="" />
+                <img v-else
+                  src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg"
+                  alt="" />
+              </div>
+              <div class="info me-5 ms-4">
+                <h1 class="mt-3">{{ doctor.user.name }}</h1>
+                <p class="stars" v-html="getStar()"></p>
+
+                <div class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4">
+                  <div v-for="specialization in doctor.specializations" class="badge me-3 mb-3"
+                    :style="{ backgroundColor: specialization.color }">
+                    {{ specialization.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="contacts">
+              <h4 class="phone mt-3">Phone: +39 {{ doctor.phone }}</h4>
+              <h6 class="location me-5">Location: {{ doctor.address }}</h6>
+              <a :href="formatAddress" target="_blank" class="location me-5">View on map</a>
+            </div>
+            <div class="message-review-vote d-flex flex-column">
+              <router-link :to="{ name: 'contact' }" class="btn btn-sm btn-primary me-3 mb-2">Contact me</router-link>
+              <router-link :to="{ name: 'review' }" class="btn btn-sm btn-secondary me-3 mb-2">Leave a
+                review</router-link>
+            </div>
+            <form @submit.prevent="sendForm" novalidate>
+              <div class="d-flex flex-column me-3">
+                <label for="vote" class="form-label">Lascia un voto<sup class="text-danger">*</sup></label>
+                <select @change="changeVote" v-model="voto" class="mb-2" aria-label="Default select example">
+                  <option :value="0" selected>Voto</option>
+                  <option :value="1">Pessimo</option>
+                  <option :value="2">Discreto</option>
+                  <option :value="3">Buono</option>
+                  <option :value="4">Ottimo</option>
+                  <option :value="5">Eccellente</option>
+                </select>
+                <button type="submit" class="btn btn-primary p-1 align-self-center">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="d-flex">
+            <div class="review">
+              <hr class="mt-0" />
+              <ReviewCard v-for="review in doctor.review" :review="review" />
+            </div>
+            <div class="vote">
+              <hr class="mt-0" />
+              <VoteCard v-for="vote in doctor.votes" :vote="vote" />
+            </div>
+          </div>
+        </div>
 </template>
 
 <style scoped lang="scss">

@@ -2,12 +2,13 @@
 import { store } from "../data/store";
 import DoctorsCard from "../components/doctors/DoctorsCard.vue";
 import axios from "axios";
+import AppLoader from "../components/AppLoader.vue";
 const apiBaseUrl = "http://127.0.0.1:8000/api";
 const apiBaseUrlSpec = "http://localhost:8000/api/specializations";
 const apiBaseUrlVote = "http://localhost:8000/api/votes";
 export default {
   name: "Ricerca",
-  components: { DoctorsCard },
+  components: { DoctorsCard, AppLoader },
   data() {
     return {
       store,
@@ -16,11 +17,12 @@ export default {
       name: "",
       address: "",
       specialization: "",
-      voto: 0,
+      voto: 1,
       votes: [],
       city: "",
       media: 0,
       id: 0,
+      isLoading: false,
       recensione: "",
       reviews: 0,
       reviewNumber: 0,
@@ -28,6 +30,7 @@ export default {
   },
   methods: {
     fetchDoctors(endpoint = null) {
+      this.isLoading = true;
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       if (!endpoint) endpoint = apiBaseUrl + "/doctors";
       axios
@@ -39,6 +42,9 @@ export default {
         // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
         .catch((err) => {
           console.error(err);
+        })
+        .then(() => {
+          this.isLoading = false;
         });
     },
     updateName() {
@@ -51,9 +57,6 @@ export default {
       this.store.specialization = this.specialization;
     },
     updateCity() {
-      this.store.city = this.city;
-    },
-    updateVote() {
       this.store.city = this.city;
     },
     onButtonClicked() {
@@ -139,17 +142,27 @@ export default {
         });
       } else return this.doctors;
     },
+    updateValue() {
+      this.name = this.store.name;
+      this.city = this.store.city;
+      this.specialization = this.store.specialization;
+    },
   },
   created() {
     this.fetchDoctors();
     this.fetchSpecializations();
     this.fetchVotes();
+    this.updateValue;
   },
+  // mounted() {
+  //   this.filter;
+  // },
 };
 </script>
 
 <template>
-  <div class="container">
+  <AppLoader v-if="isLoading" />
+  <div v-else class="container">
     <h3 class="text-danger mt-4 mb-5 text-center">
       Tutti i nostri Specialisti
     </h3>
@@ -179,7 +192,7 @@ export default {
               </option>
             </select>
           </div>
-          <button @click="onButtonClicked">Cerca</button>
+          <button type="button" @click="onButtonClicked">Cerca</button>
         </form>
       </div>
 
@@ -189,7 +202,6 @@ export default {
           class="specializzazione"
           aria-label="Default select example"
         >
-          <option :value="0" selected>Voto</option>
           <option :value="vote.value" v-for="vote in votes">
             {{ vote.label }}
           </option>
@@ -200,10 +212,12 @@ export default {
           class="specializzazione"
           aria-label="Default select example"
         >
-          <option :value="0" selected>Recensioni</option>
-          <option :value="0">Tutti</option>
+          <option :value="0" selected>Tutti</option>
           <option :value="2">Più di 2 recensioni</option>
-          <option :value="4">Più di 4 recensioni</option>
+          <option :value="6">Più di 6 recensioni</option>
+          <option :value="8">Più di 8 recensioni</option>
+          <option :value="10">Più di 10 recensioni</option>
+          <option :value="12">Più di 12 recensioni</option>
         </select>
       </div>
     </div>

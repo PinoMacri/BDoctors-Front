@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-
+import { store } from "../data/store";
 const endpoint = "http://127.0.0.1:8000/api/review";
 const emptyForm = {
   doctor_id: "",
@@ -13,6 +13,7 @@ export default {
     form: emptyForm,
     doctor: "",
     doctor_id: "",
+    store,
   }),
   methods: {
     sendForm() {
@@ -26,11 +27,17 @@ export default {
           };
         })
         .catch((err) => {
+          this.isALertOpen = true;
           console.error(err);
         })
         .then(() => {
+          this.updateAlert();
           window.history.back();
         });
+    },
+    updateAlert() {
+      this.store.alertType = "alert-success";
+      this.store.alert = "Lasciata review con successo!";
     },
     getId() {
       this.doctor = window.location.pathname;
@@ -50,22 +57,39 @@ export default {
     <form @submit.prevent="sendForm" class="py-5">
       <!-- EMAIL -->
       <div class="mb-3">
-        <label for="name" class="form-label">Full name<sup class="text-danger">*</sup></label>
-        <input @keyup="this.getId()" type="text" class="form-control" id="name" name="name"
-          aria-describedby="name@example.com" v-model.trim="form.name" required />
+        <label for="name" class="form-label"
+          >Full name<sup class="text-danger">*</sup></label
+        >
+        <input
+          @keyup="this.getId()"
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          aria-describedby="name@example.com"
+          v-model.trim="form.name"
+          required
+        />
         <small class="text-muted form-text">Your full name</small>
       </div>
 
       <!-- CONTENUTO DEL MESSAGGIO -->
       <div class="mb-3">
-        <label for="text" class="form-label">Review<sup class="text-danger">*</sup></label>
-        <textarea class="form-control" rows="3" name="text" id="text" v-model.trim="form.text" required></textarea>
+        <label for="text" class="form-label"
+          >Review<sup class="text-danger">*</sup></label
+        >
+        <textarea
+          class="form-control"
+          rows="3"
+          name="text"
+          id="text"
+          v-model.trim="form.text"
+          required
+        ></textarea>
       </div>
 
       <div>
-        <button @click="redirect" type="submit" class="btn btn-primary">
-          Submit
-        </button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
   </div>
