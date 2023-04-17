@@ -16,16 +16,7 @@ export default {
           url: '/ricerca',
           current: false,
         },
-        {
-          text: "Contatti",
-          url: '/contatti',
-          current: false,
-        },
-        {
-          text: "Chi Siamo",
-          url: '/chi-siamo',
-          current: false,
-        },
+
       ]
     }
   }
@@ -49,7 +40,7 @@ export default {
         </div>
       </div>
       <div v-if="menu === true" class="d-flex flex-column align-items-end d-lg-none">
-        <div class="singolo-link h-100 position-relative d-flex flex-column align-items-center justify-content-center"
+        <div class="singolo-link h-100 position-relative d-flex flex-column align-items-center justify-content-start"
           v-for="link in links" v-bind:key="link.text">
           <router-link :to="link.url" :class="currentIndex === link.text ? 'link-click' : ''" class="tendina"
             @click="currentIndex = link.text">{{ link.text }}</router-link>
@@ -63,7 +54,7 @@ export default {
           <a href="#"><img class="logo" src="../../../public/pngwing.com (28).png" alt="" /></a>
           <h4 class="scritta-logo mb-0">BDoctors</h4>
         </div>
-        <div class="col-6 h-100 d-flex justify-content-between align-items-center">
+        <div class="col-6 h-100 d-flex justify-content-around align-items-center">
           <div class="singolo-link h-100 position-relative d-flex flex-column align-items-center justify-content-center"
             v-for="link in links" v-bind:key="link.text">
             <router-link :to="link.url" :class="currentIndex === link.text ? 'link-click' : ''"

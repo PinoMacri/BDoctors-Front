@@ -336,7 +336,7 @@ export default {
                     </div>
                     <div>
                         <h6 class="p-2">{{ card.title }}</h6>
-                        <p>{{ card.text.substring(0, 250) }} ...</p>
+                        <p>{{ card.text.substring(0, 240) }} ...</p>
                     </div>
 
                     <div class="d-flex justify-content-center mt-5">

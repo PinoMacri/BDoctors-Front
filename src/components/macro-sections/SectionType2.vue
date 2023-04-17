@@ -65,9 +65,11 @@ export default {
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end justify-content-lg-start mt-5 mb-0">
-                                <a class="btn profile" href="">Scopri di più <i
-                                        class="ms-1 fa-solid fa-arrow-right"></i></a>
+                                <router-link to="/ricerca" class="btn profile">Scopri di più <i
+                                        class="ms-1 fa-solid fa-arrow-right"></i></router-link>
                             </div>
+
+
                         </div>
 
                     </div>

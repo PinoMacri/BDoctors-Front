@@ -76,7 +76,7 @@ export default {
   <div v-if="reviewNumber <= this.review || reviewNumber === 0">
     <div v-if="voto <= this.media || voto === 0">
       <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
-        <div class="card doctor-card text-bg-dark">
+        <div class="card doctor-card mb-0 mt-4 text-bg-dark">
           <img v-if="!doctor.photo"
             src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
             class="card-img" alt="..." />
@@ -112,6 +112,14 @@ export default {
   height: 265.33px;
   overflow: hidden;
   position: relative;
+  transition: 1s;
+
+
+
+  &:hover {
+    box-shadow: 1px 1px 2px rgb(190, 185, 185), 0 0 1em blue, 0 0 0.2em red;
+    transform: scale(1.1);
+  }
 
   .overlay {
     background-color: rgba(0, 0, 0, 0.4);

@@ -7,4 +7,5 @@ export const store = reactive({
   vote: "",
   city: "",
   review: [],
+  isLoading: false,
 });

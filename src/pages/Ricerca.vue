@@ -1,13 +1,14 @@
 <script>
 import { store } from "../data/store";
 import DoctorsCard from "../components/doctors/DoctorsCard.vue";
+import Footer from "../components/macro-sections/Footer.vue";
 import axios from "axios";
 const apiBaseUrl = "http://127.0.0.1:8000/api";
 const apiBaseUrlSpec = "http://localhost:8000/api/specializations";
 const apiBaseUrlVote = "http://localhost:8000/api/votes";
 export default {
   name: "Ricerca",
-  components: { DoctorsCard },
+  components: { DoctorsCard, Footer },
   data() {
     return {
       store,
@@ -30,16 +31,19 @@ export default {
     fetchDoctors(endpoint = null) {
       // Se l'endpoint non me lo dai sarà basico altrimenti se me lo passi andrà dove gli diremo noi ( link.url che sara la pagina succ o previous)
       if (!endpoint) endpoint = apiBaseUrl + "/doctors";
-      axios
-        .get(endpoint)
-        .then((res) => {
-          // In res.data arrivano i dati della chiamata da axios
-          this.doctors = res.data;
-        })
-        // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
-        .catch((err) => {
-          console.error(err);
-        });
+      store.isLoading = true,
+        axios
+          .get(endpoint)
+          .then((res) => {
+            // In res.data arrivano i dati della chiamata da axios
+            this.doctors = res.data;
+          })
+          // Controllo con catch se ci sono errori e nel caso l'alert sarà true (on)
+          .catch((err) => {
+            console.error(err);
+          }).then(() => {
+            store.isLoading = false;
+          });
     },
     updateName() {
       this.store.name = this.name;
@@ -149,75 +153,143 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <h3 class="text-danger mt-4 mb-5 text-center">
-      Tutti i nostri Specialisti
-    </h3>
-    <div class="d-flex justify-content-between">
-      <div>
-        <form @submit.prevent class="d-flex filtri" action="">
-          <div>
-            <input
-              class="nome-dottore"
-              v-model.trim="name"
-              placeholder="Nome Dottore"
-              type="text"
-            />
-          </div>
-          <div class="citta-dottore">
-            <input v-model.trim="city" placeholder="Città" type="text" />
-          </div>
-          <div class="specializzazione-dottore">
-            <select
-              v-model="specialization"
-              class="specializzazione"
-              aria-label="Default select example"
-            >
-              <option value="" selected>Specializzazione</option>
-              <option v-for="specialization in specializations">
-                {{ specialization.name }}
-              </option>
-            </select>
-          </div>
-          <button @click="onButtonClicked">Cerca</button>
-        </form>
+  <div class="ricerca-body">
+    <div class="container">
+      <h3 class="text-danger pt-5 mb-5 text-center">
+        Tutti i nostri Specialisti
+      </h3>
+      <div class="d-lg-flex justify-content-between">
+        <div>
+          <form @submit.prevent class="filtri" action="">
+            <div class="d-flex">
+              <div>
+                <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
+              </div>
+              <div>
+                <input class="citta-dottore" v-model.trim="city" placeholder="Città" type="text" />
+              </div>
+              <div class="specializzazione-dottore">
+                <select v-model="specialization" class="specializzazione" aria-label="Default select example">
+                  <option value="" selected>Specializzazione</option>
+                  <option v-for="specialization in specializations">
+                    {{ specialization.name }}
+                  </option>
+                </select>
+              </div>
+              <button class="d-none d-md-block" @click="onButtonClicked">Cerca</button>
+            </div>
+            <button class="d-md-none mt-3 ms-0" @click="onButtonClicked">Cerca</button>
+
+          </form>
+        </div>
+
+        <div class="mt-3 mt-lg-0">
+          <select v-model="voto" class="select-voto" aria-label="Default select example">
+            <option :value="0" selected>Voto</option>
+            <option :value="vote.value" v-for="vote in votes">
+              {{ vote.label }}
+            </option>
+          </select>
+
+          <select v-model="reviewNumber" class="select-recensione" aria-label="Default select example">
+            <option :value="0" selected>Recensioni</option>
+            <option :value="0">Tutti</option>
+            <option :value="2">Più di 2 recensioni</option>
+            <option :value="4">Più di 4 recensioni</option>
+          </select>
+        </div>
       </div>
-
-      <div>
-        <select
-          v-model="voto"
-          class="specializzazione"
-          aria-label="Default select example"
-        >
-          <option :value="0" selected>Voto</option>
-          <option :value="vote.value" v-for="vote in votes">
-            {{ vote.label }}
-          </option>
-        </select>
-
-        <select
-          v-model="reviewNumber"
-          class="specializzazione"
-          aria-label="Default select example"
-        >
-          <option :value="0" selected>Recensioni</option>
-          <option :value="0">Tutti</option>
-          <option :value="2">Più di 2 recensioni</option>
-          <option :value="4">Più di 4 recensioni</option>
-        </select>
+      <div v-if="store.isLoading" class="pt-3 text-center">
+        <i class="loader fa-solid fa-spinner"></i>
+        <p class="mt-1 loading">Loading...</p>
       </div>
-    </div>
+      <div class="doctors-list d-flex justify-content-center mt-3 justify-content-lg-between flex-wrap mb-5">
 
-    <div class="doctors-list d-flex justify-content-start flex-wrap mb-5">
-      <DoctorsCard
-        v-for="(doctor, i) in filter"
-        :key="doctor.id"
-        :doctor="doctor"
-        :voto="voto"
-        :reviewNumber="reviewNumber"
-      />
+        <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto"
+          :reviewNumber="reviewNumber" />
+
+      </div>
     </div>
   </div>
+  <Footer />
 </template>
 
-<style></style>
+<style lang="scss" scoped>
+.loader {
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fa-solid.fa-spinner {
+  font-size: 60px;
+}
+
+.loading {
+  font-size: 30px;
+}
+
+h3 {
+  font-weight: bold;
+}
+
+input,
+select {
+  border: 1px solid black;
+}
+
+.ricerca-body {
+  height: 100%;
+  background-image: linear-gradient(to bottom, rgb(109, 166, 212), rgb(255, 255, 255));
+}
+
+.select-recensione {
+  height: 30px;
+  border-radius: 0px 15px 15px 0px;
+  width: 150px;
+}
+
+.select-voto {
+  border-radius: 15px 0px 0px 15px;
+  height: 30px;
+  width: 150px;
+}
+
+.nome-dottore {
+  border-radius: 15px 0px 0px 15px;
+  height: 30px;
+  width: 150px;
+}
+
+.citta-dottore {
+  width: 150px;
+  height: 30px;
+}
+
+.specializzazione {
+  height: 30px;
+  border-radius: 0px 15px 15px 0px;
+  width: 150px;
+}
+
+button {
+  border-radius: 15px;
+  margin-left: 10px;
+  padding: 0px 10px;
+
+  &:hover {
+    transform: scale(1.2);
+
+  }
+
+
+}
+</style>

@@ -13,7 +13,8 @@ export default {
                 </div>
                 <div class="col-6 d-flex align-items-center justify-content-end">
                     <div class=" profile-xs ">
-                        <a class="btn profile" href="">Registrati<i class="ms-1 fa-solid fa-arrow-right"></i></a>
+                        <a class="btn profile" href="http://127.0.0.1:8000/register">Registrati<i
+                                class="ms-1 fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -28,8 +29,9 @@ export default {
                 </div>
                 <div class="col-6 d-flex align-items-center justify-content-end">
                     <div class=" profile-xs ">
-                        <a class="btn profile" href="">Inserisci il tuo Profilo<i
+                        <a class="btn profile" href="http://127.0.0.1:8000/register">Inserisci il tuo Profilo<i
                                 class="ms-1 fa-solid fa-arrow-right"></i></a>
+
                     </div>
                 </div>
             </div>
