@@ -49,53 +49,26 @@ export default {
   <div class="container p-2">
     <h1>Contact us!</h1>
     <!-- Prevent e intercetta il method sendform -->
-    <form @submit.prevent="sendForm" class="py-5" novalidate>
+    <form @submit.prevent="sendForm" class="py-5">
       <!-- EMAIL -->
       <div class="mb-3">
-        <label for="sender" class="form-label"
-          >Email address<sup class="text-danger">*</sup></label
-        >
-        <input
-          @keyup="this.getId()"
-          type="email"
-          class="form-control"
-          id="sender"
-          name="sender"
-          aria-describedby="name@example.com"
-          v-model.trim="form.sender"
-          required
-        />
+        <label for="sender" class="form-label">Email address<sup class="text-danger">*</sup></label>
+        <input @keyup="this.getId()" type="email" class="form-control" id="sender" name="sender"
+          aria-describedby="name@example.com" v-model.trim="form.sender" required />
         <small class="text-muted form-text">Your email</small>
       </div>
 
       <!-- OGGETTO -->
       <div class="mb-3">
-        <label for="subject" class="form-label"
-          >Email Subject<sup class="text-danger">*</sup></label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="subject"
-          name="subject"
-          v-model.trim="form.subject"
-          required
-        />
+        <label for="subject" class="form-label">Email Subject<sup class="text-danger">*</sup></label>
+        <input type="text" class="form-control" id="subject" name="subject" v-model.trim="form.subject" required />
       </div>
 
       <!-- CONTENUTO DEL MESSAGGIO -->
       <div class="mb-3">
-        <label for="message" class="form-label"
-          >Message<sup class="text-danger">*</sup></label
-        >
-        <textarea
-          class="form-control"
-          rows="3"
-          name="message"
-          id="message"
-          v-model.trim="form.message"
-          required
-        ></textarea>
+        <label for="message" class="form-label">Message<sup class="text-danger">*</sup></label>
+        <textarea class="form-control" rows="3" name="message" id="message" v-model.trim="form.message"
+          required></textarea>
       </div>
       <div>
         <button type="submit" class="btn btn-primary">Submit</button>
