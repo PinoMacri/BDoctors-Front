@@ -16,11 +16,9 @@ export default {
           url: "/ricerca",
           current: false,
         },
-
-      ]
-    }
-  }
-
+      ],
+    };
+  },
 };
 </script>
 
@@ -29,36 +27,78 @@ export default {
   <div class="nav-bar p-2">
     <nav class="container">
       <!--** NAV Smartphone & Tablet -->
-      <div class="row row-smartphone-tablet m-0 p-0 align-items-center justify-content-between">
+      <div
+        class="row row-smartphone-tablet m-0 p-0 align-items-center justify-content-between"
+      >
         <div class="col-6 col-lg-3 d-flex align-items-center p-0">
-          <a href="#"><img class="logo" src="../../../public/pngwing.com (28).png" alt="" /></a>
+          <a href="#"
+            ><img
+              class="logo"
+              src="../../../public/pngwing.com (28).png"
+              alt=""
+          /></a>
           <h4 class="scritta-logo d-none mb-0 d-lg-block">BDoctors</h4>
         </div>
         <div class="col-6 text-end">
-          <i @click="menu = !menu" :class="menu === false ? 'fa-solid fa-bars' : 'fa-solid fa-xmark'"
-            style="color: black"></i>
+          <i
+            @click="menu = !menu"
+            :class="menu === false ? 'fa-solid fa-bars' : 'fa-solid fa-xmark'"
+            style="color: black"
+          ></i>
         </div>
       </div>
-      <div v-if="menu === true" class="d-flex flex-column align-items-end d-lg-none">
-        <div class="singolo-link h-100 position-relative d-flex flex-column align-items-center justify-content-center"
-          v-for="link in links" v-bind:key="link.text">
-          <router-link :to="link.url" :class="currentIndex === link.text ? 'link-click' : ''" class="tendina"
-            @click="currentIndex = link.text">{{ link.text }}</router-link>
-          <div v-if="currentIndex === link.text" class="selezione-hover-logo"></div>
+      <div
+        v-if="menu === true"
+        class="d-flex flex-column align-items-end d-lg-none"
+      >
+        <div
+          class="singolo-link h-100 position-relative d-flex flex-column align-items-center justify-content-center"
+          v-for="link in links"
+          v-bind:key="link.text"
+        >
+          <router-link
+            :to="link.url"
+            :class="currentIndex === link.text ? 'link-click' : ''"
+            class="tendina"
+            @click="currentIndex = link.text"
+            >{{ link.text }}</router-link
+          >
+          <div
+            v-if="currentIndex === link.text"
+            class="selezione-hover-logo"
+          ></div>
         </div>
       </div>
 
       <!--** NAV Smartphone Desktop -->
-      <div class="row row-desktop m-0 p-0 align-items-center justify-content-between">
+      <div
+        class="row row-desktop m-0 p-0 align-items-center me-5 justify-content-between"
+      >
         <div class="col-3 d-flex align-items-center">
-          <a href="#"><img class="logo" src="../../../public/pngwing.com (28).png" alt="" /></a>
+          <a href="#"
+            ><img
+              class="logo"
+              src="../../../public/pngwing.com (28).png"
+              alt=""
+          /></a>
           <h4 class="scritta-logo mb-0">BDoctors</h4>
         </div>
-        <div class="col-6 h-100 d-flex justify-content-between align-items-center">
-          <div class="singolo-link h-100 position-relative d-flex flex-column align-items-center justify-content-center"
-            v-for="link in links" v-bind:key="link.text">
-            <router-link :to="link.url" :class="currentIndex === link.text ? 'link-click' : ''">{{ link.text }}
-              <div class="selezione-hover-logo" :class="currentIndex === link.text ? 'link-click' : ''"></div>
+        <div
+          class="col-6 h-100 d-flex justify-content-start align-items-center"
+        >
+          <div
+            class="singolo-link h-100 position-relative d-flex flex-column align-items-center me-5 justify-content-center"
+            v-for="link in links"
+            v-bind:key="link.text"
+          >
+            <router-link
+              :to="link.url"
+              :class="currentIndex === link.text ? 'link-click' : ''"
+              >{{ link.text }}
+              <div
+                class="selezione-hover-logo"
+                :class="currentIndex === link.text ? 'link-click' : ''"
+              ></div>
             </router-link>
           </div>
         </div>
@@ -102,7 +142,6 @@ nav {
           color: white;
         }
       }
-
       a.active .selezione-hover-logo {
         height: 4px;
         width: 100%;
@@ -113,7 +152,6 @@ nav {
         bottom: 0;
         margin-bottom: 5px;
       }
-
       a.active {
         text-shadow: 1px 1px 2px rgb(0, 217, 255), 0 0 1em rgb(0, 174, 255),
           0 0 0.2em rgb(0, 217, 255);

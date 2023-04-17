@@ -93,7 +93,7 @@ export default {
   },
   created() {
     this.getDoctor();
-    setTimeout(this.clearAlert, 7000);
+    setTimeout(this.clearAlert, 10000);
   },
 };
 </script>

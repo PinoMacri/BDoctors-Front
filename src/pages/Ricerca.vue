@@ -163,125 +163,99 @@ export default {
 
 <template>
   <AppLoader v-if="isLoading" />
-  <div v-else class="container">
-    <h3 class="text-danger mt-4 mb-5 text-center">
-      Tutti i nostri Specialisti
-    </h3>
-    <div class="d-flex justify-content-between">
-      <div>
-        <form @submit.prevent class="d-flex filtri" action="">
-          <div>
-            <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
-          </div>
-          <div class="citta-dottore">
-            <input v-model.trim="city" placeholder="Città" type="text" />
-          </div>
-          <div class="specializzazione-dottore">
-            <select v-model="specialization" class="specializzazione" aria-label="Default select example">
-              <option value="" selected>Specializzazione</option>
-              <option v-for="specialization in specializations">
-                {{ specialization.name }}
-              </option>
-            </select>
-          </div>
-          <button type="button" @click="onButtonClicked">Cerca</button>
-        </form>
-        <!-- ciao -->
-        <div class="ricerca-body">
-          <div class="container">
-            <h3 class="text-danger pt-5 mb-5 text-center">
-              Tutti i nostri Specialisti
-            </h3>
-            <div class="d-lg-flex justify-content-between">
+  <div v-else class="ricerca-body">
+    <div class="container">
+      <h3 class="text-danger pt-5 mb-5 text-center">
+        Tutti i nostri Specialisti
+      </h3>
+      <div class="d-lg-flex justify-content-between">
+        <div class="mt-3 mb-3 mt-lg-0">
+          <select
+            v-model="voto"
+            class="select-voto"
+            aria-label="Default select example"
+          >
+            <option :value="0" selected>Voto</option>
+            <option :value="vote.value" v-for="vote in votes">
+              {{ vote.label }}
+            </option>
+          </select>
+
+          <select
+            v-model="reviewNumber"
+            class="select-recensione"
+            aria-label="Default select example"
+          >
+            <option :value="0" selected>Tutti</option>
+            <option :value="2">Più di 2 recensioni</option>
+            <option :value="6">Più di 6 recensioni</option>
+            <option :value="8">Più di 8 recensioni</option>
+            <option :value="10">Più di 10 recensioni</option>
+            <option :value="12">Più di 12 recensioni</option>
+          </select>
+        </div>
+
+        <div>
+          <form @submit.prevent class="filtri" action="">
+            <div class="d-flex">
               <div>
-                <form @submit.prevent class="filtri" action="">
-                  <div class="d-flex">
-                    <div>
-                      <input class="nome-dottore" v-model.trim="name" placeholder="Nome Dottore" type="text" />
-                    </div>
-                    <div>
-                      <input class="citta-dottore" v-model.trim="city" placeholder="Città" type="text" />
-                    </div>
-                    <div class="specializzazione-dottore">
-                      <select v-model="specialization" class="specializzazione" aria-label="Default select example">
-                        <option value="" selected>Specializzazione</option>
-                        <option v-for="specialization in specializations">
-                          {{ specialization.name }}
-                        </option>
-                      </select>
-                    </div>
-                    <button class="d-none d-md-block" @click="onButtonClicked">Cerca</button>
-                  </div>
-                  <button class="d-md-none mt-3 ms-0" @click="onButtonClicked">Cerca</button>
-
-                </form>
+                <input
+                  class="nome-dottore"
+                  v-model.trim="name"
+                  placeholder="Nome Dottore"
+                  type="text"
+                />
               </div>
-
-              <div class="mt-3 mt-lg-0">
-                <select v-model="voto" class="select-voto" aria-label="Default select example">
-                  <option :value="0" selected>Voto</option>
-                  <option :value="vote.value" v-for="vote in votes">
-                    {{ vote.label }}
+              <div>
+                <input
+                  class="citta-dottore"
+                  v-model.trim="city"
+                  placeholder="Città"
+                  type="text"
+                />
+              </div>
+              <div class="specializzazione-dottore">
+                <select
+                  v-model="specialization"
+                  class="specializzazione"
+                  aria-label="Default select example"
+                >
+                  <option value="" selected>Specializzazione</option>
+                  <option v-for="specialization in specializations">
+                    {{ specialization.name }}
                   </option>
                 </select>
-
-                <select v-model="reviewNumber" class="select-recensione" aria-label="Default select example">
-                  <option :value="0" selected>Recensioni</option>
-                  <option :value="0">Tutti</option>
-                  <option :value="2">Più di 2 recensioni</option>
-                  <option :value="4">Più di 4 recensioni</option>
-                </select>
               </div>
+              <button class="d-none d-md-block" @click="onButtonClicked">
+                Cerca
+              </button>
             </div>
-
-            <div>
-              <select v-model="voto" class="specializzazione" aria-label="Default select example">
-                <option :value="vote.value" v-for="vote in votes">
-                  {{ vote.label }}
-                </option>
-              </select>
-
-              <select v-model="reviewNumber" class="specializzazione" aria-label="Default select example">
-                <option :value="0" selected>Tutti</option>
-                <option :value="2">Più di 2 recensioni</option>
-                <option :value="6">Più di 6 recensioni</option>
-                <option :value="8">Più di 8 recensioni</option>
-                <option :value="10">Più di 10 recensioni</option>
-                <option :value="12">Più di 12 recensioni</option>
-              </select>
-            </div>
-            <div class="doctors-list d-flex justify-content-center mt-3 justify-content-lg-between flex-wrap mb-5">
-
-              <DoctorsCard v-for="(doctor, i) in filter" :key="doctor.id" :doctor="doctor" :voto="voto"
-                :reviewNumber="reviewNumber" />
-
-            </div>
-          </div>
+            <button class="d-md-none mt-3 ms-0" @click="onButtonClicked">
+              Cerca
+            </button>
+          </form>
         </div>
-        <Footer />
+      </div>
+
+      <div
+        class="doctors-list d-flex justify-content-center mt-3 justify-content-lg-start flex-wrap mb-5"
+      >
+        <DoctorsCard
+          v-for="(doctor, i) in filter"
+          :key="doctor.id"
+          :doctor="doctor"
+          :voto="voto"
+          :reviewNumber="reviewNumber"
+        />
+      </div>
+    </div>
+  </div>
+  <Footer />
 </template>
 
 <style lang="scss" scoped>
-.loader {
-  animation: spin 1s infinite linear;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.fa-solid.fa-spinner {
-  font-size: 60px;
-}
-
-.loading {
-  font-size: 30px;
+.doctors-list {
+  gap: 20px;
 }
 
 h3 {
@@ -295,7 +269,11 @@ select {
 
 .ricerca-body {
   height: 100%;
-  background-image: linear-gradient(to bottom, rgb(109, 166, 212), rgb(255, 255, 255));
+  background-image: linear-gradient(
+    to bottom,
+    rgb(109, 166, 212),
+    rgb(255, 255, 255)
+  );
 }
 
 .select-recensione {
@@ -334,9 +312,6 @@ button {
 
   &:hover {
     transform: scale(1.2);
-
   }
-
-
 }
 </style>
