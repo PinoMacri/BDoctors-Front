@@ -19,6 +19,7 @@ export default {
       voto: 0,
       media: 0,
       alert: false,
+      alertText: "",
     };
   },
   components: { ReviewCard, VoteCard, AppLoader },
@@ -70,6 +71,9 @@ export default {
         } else message += " <i class='fa-regular fa-star'></i> ";
       return message;
     },
+    clearAlert() {
+      this.store.alert = "";
+    },
   },
   computed: {
     formatAddress() {
@@ -89,6 +93,7 @@ export default {
   },
   created() {
     this.getDoctor();
+    setTimeout(this.clearAlert, 7000);
   },
 };
 </script>
@@ -109,6 +114,7 @@ export default {
       >
         {{ this.store.alert }}
         <button
+          @click="clearAlert()"
           type="button"
           class="btn-close"
           data-bs-dismiss="alert"
