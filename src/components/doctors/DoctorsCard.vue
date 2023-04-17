@@ -74,7 +74,7 @@ export default {
 <template>
   <!-- vedi se va -->
   <div v-if="reviewNumber <= this.review || reviewNumber === 0">
-    <div v-if="voto <= this.media || voto === 1">
+    <div v-if="voto <= this.media || voto === 1 || voto === 0">
       <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
         <div class="card doctor-card mb-0 mt-4 text-bg-dark">
           <img v-if="!doctor.photo"
