@@ -14,15 +14,12 @@ export default {
         } else message += " <i class='fa-regular fa-star'></i> ";
       return message;
     },
-    try() {
-      console.log(this.vote.created_at);
-    },
   },
   computed: {
     voteDateCreated() {
-      const date = new Date(this.vote.created_at);
+      const date = new Date(this.vote.pivot.created_at);
       let day = date.getDate();
-      let month = date.getMonth();
+      let month = date.getMonth() + 1;
       const year = date.getFullYear();
       let hours = date.getHours();
       let minutes = date.getMinutes();
@@ -38,14 +35,11 @@ export default {
       return `${day}/${month}/${year} - ${hours}:${minutes}:${seconds} `;
     },
   },
-  created() {
-    this.try();
-  },
 };
 </script>
 
 <template>
-  <div class="my-bgc mb-2 p-3 mx-2 rounded my-border ">
+  <div class="my-bgc mb-2 p-3 mx-2 rounded my-border">
     <div class="vote">
       <p class="stars d-flex" v-html="getStar()"></p>
     </div>

@@ -14,7 +14,7 @@ export default {
     reviewDateCreated() {
       const date = new Date(this.review.created_at);
       let day = date.getDate();
-      let month = date.getMonth();
+      let month = date.getMonth() + 1;
       const year = date.getFullYear();
       let hours = date.getHours();
       let minutes = date.getMinutes();
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <template>
-  <div class=" bg-light rounded p-3 my-3">
+  <div class="bg-light rounded p-3 my-3">
     <div class="details d-flex align-items-center">
       <h4 class="me-3 text-primary">{{ review.name }}</h4>
       <p class="mt-3">{{ reviewDateCreated }}</p>
