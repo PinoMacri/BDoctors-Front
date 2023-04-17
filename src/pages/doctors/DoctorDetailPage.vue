@@ -95,178 +95,115 @@ export default {
 
 <template>
   <!-- top section -->
-  <div class="d-flex align-items-center mt-3 px-4">
-    <div class="user d-flex align-items-center">
-      <!-- ! foto dottore -->
-      <div class="circle my-border">
-        <div class="photo d-flex">
-          <img v-if="doctor.photo" :src="'http://127.0.0.1:8000/storage/' + doctor.photo" alt="" class="img-fluid" />
-          <img v-else
-            src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg"
-            alt="" />
-        </div>
-        <!-- premium badge -->
-        <div v-if="doctor.is_sponsored" class="premium-over">
-          <img src="../../../public/Sponsored.png" alt="logo overlay" class="img-fluid">
-        </div>
+  <div class="container">
+    <div
+      v-if="this.store.alert"
+      :is-open="isALertOpen"
+      @close="isALertOpen = false"
+      class="container"
+    >
+      <div
+        class="alert alert-dismissible fade show my-5"
+        :class="this.store.alertType"
+        role="alert"
+      >
+        {{ this.store.alert }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
       </div>
-      <!-- !generalità -->
-      <div class="info me-5 ms-4">
-        <h1 class="mt-3">{{ doctor.user.name }}</h1>
-        <p class="stars" v-html="getStar()"></p>
-
-        <div class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4">
-          <div v-for="specialization in doctor.specializations" class="badge me-3 mb-3"
-            :style="{ backgroundColor: specialization.color }">
-            {{ specialization.name }}
+    </div>
+    <AppLoader v-if="isLoading === true" />
+    <div v-else>
+      <div class="d-flex align-items-center mt-3 px-4">
+        <div class="user d-flex align-items-center">
+          <!-- ! foto dottore -->
+          <div class="circle my-border">
+            <div class="photo d-flex">
+              <img
+                v-if="doctor.photo"
+                :src="'http://127.0.0.1:8000/storage/' + doctor.photo"
+                alt=""
+                class="img-fluid"
+              />
+              <img
+                v-else
+                src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg"
+                alt=""
+              />
+            </div>
+            <!-- premium badge -->
+            <div v-if="doctor.is_sponsored" class="premium-over">
+              <img
+                src="../../../public/Sponsored.png"
+                alt="logo overlay"
+                class="img-fluid"
+              />
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <!-- !telefono e contatti -->
-    <div class="contacts mx-5">
-      <h4 class="phone mt-3">Phone: +39 {{ doctor.phone }}</h4>
-      <h6 class="location me-5">Location: {{ doctor.address }}</h6>
-      <a :href="formatAddress" target="_blank" class="location me-5">Scopri dove si trova!</a>
-      <div class="mt-3">
-        <router-link :to="{ name: 'contact' }" class="btn btn-sm btn-primary me-3 mb-2"><i
-            class="fa-solid fa-paper-plane me-2"></i>Messaggio</router-link>
-      </div>
-    </div>
-    <!-- ! stripe recensioni -->
-    <div class="alt-bg p-3 flex-column rounded stripe-collappse">
-      <div class="top">
-        <h2 class="text-light pt-3">Conosci {{ doctor.user.name }} ?</h2>
-      </div>
-      <div class="bottom d-flex align-items-center">
+          <!-- !generalità -->
+          <div class="info me-5 ms-4">
+            <h1 class="mt-3">{{ doctor.user.name }}</h1>
+            <p class="stars" v-html="getStar()"></p>
 
-        <!--! recensione -->
-        <div class="message-review-vote d-flex flex-column">
-          <router-link :to="{ name: 'review' }" class="btn btn-sm btn-secondary me-3 mb-2">Lacia una
-            Recensione</router-link>
-        </div>
-        <!--! voto -->
-        <form @submit.prevent="sendForm" novalidate>
-          <div class="d-flex flex-column me-3">
-            <label for="vote" class="form-label">Lascia un voto<sup class="text-danger">*</sup></label>
-            <select @change="changeVote" v-model="voto" class="mb-2 form-select" aria-label="Default select example">
-              <option :value="0" selected>Voto</option>
-              <option :value="1">Pessimo</option>
-              <option :value="2">Discreto</option>
-              <option :value="3">Buono</option>
-              <option :value="4">Ottimo</option>
-              <option :value="5">Eccellente</option>
-            </select>
-            <button type="submit" class="btn btn-primary p-1 align-self-center">
-              Invia
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- !stripe recensioni small -->
-  <div class="alt-bg container  align-items-center justify-content-between rounded small-stripe my-4">
-    <div class="top">
-      <h2 class="text-light pt-3">Conosci {{ doctor.user.name }} ?</h2>
-    </div>
-    <div class="bottom d-flex align-items-center">
-
-      <!--! recensione -->
-      <div class="message-review-vote d-flex flex-column">
-        <router-link :to="{ name: 'review' }" class="btn btn-sm btn-secondary me-3 mb-2">Lacia una
-          Recensione</router-link>
-      </div>
-      <!--! voto -->
-      <form @submit.prevent="sendForm" novalidate>
-        <div class="d-flex flex-column me-3">
-          <label for="vote" class="form-label">Lascia un voto<sup class="text-danger">*</sup></label>
-          <select @change="changeVote" v-model="voto" class="mb-2 form-select" aria-label="Default select example">
-            <option :value="0" selected>Voto</option>
-            <option :value="1">Pessimo</option>
-            <option :value="2">Discreto</option>
-            <option :value="3">Buono</option>
-            <option :value="4">Ottimo</option>
-            <option :value="5">Eccellente</option>
-          </select>
-          <button type="submit" class="btn btn-primary p-1 align-self-center">
-            Invia
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- tabelle principali -->
-  <div class="d-flex main-wrapper">
-    <div class="review">
-      <div class="bg-primary rounded">
-        <h1 class="text-light m-0">Recensioni</h1>
-      </div>
-      <div class="p-5 my-bgc rounded-bottom">
-        <ReviewCard v-for="review in doctor.review" :review="review" />
-      </div>
-    </div>
-    <div class="vote mt-2">
-      <div class="bg-primary mx-2 mb-1 rounded px-2">
-        <h1 class="text-light m-0 rounded-top">Voti</h1>
-      </div>
-      <div class="vote-wrapper">
-        <div v-if="this.store.alert" :is-open="isALertOpen" @close="isALertOpen = false" class="container">
-          <div class="alert alert-dismissible fade show my-5" :class="this.store.alertType" role="alert">
-            {{ this.store.alert }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        </div>
-        <AppLoader v-if="isLoading === true" />
-        <div v-else>
-          <div class="d-flex align-items-center justify-content-between mt-3">
-            <div class="user d-flex align-items-center">
-              <div class="circle">
-                <img v-if="doctor.photo" :src="'http://127.0.0.1:8000/storage/' + doctor.photo" alt="" />
-                <img v-else
-                  src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg"
-                  alt="" />
-              </div>
-              <div class="info me-5 ms-4">
-                <h1 class="mt-3">{{ doctor.user.name }}</h1>
-                <p class="stars" v-html="getStar()"></p>
-
-                <div class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4">
-                  <div v-for="specialization in doctor.specializations" class="badge me-3 mb-3"
-                    :style="{ backgroundColor: specialization.color }">
-                    {{ specialization.name }}
-                  </div>
-                </div>
+            <div
+              class="specialization-list d-flex flex-wrap justify-content-start align-items-center mt-4"
+            >
+              <div
+                v-for="specialization in doctor.specializations"
+                class="badge me-3 mb-3"
+                :style="{ backgroundColor: specialization.color }"
+              >
+                {{ specialization.name }}
               </div>
             </div>
-            <div class="contacts">
-              <h4 class="phone mt-3">Phone: +39 {{ doctor.phone }}</h4>
-              <h6 class="location me-5">Location: {{ doctor.address }}</h6>
-              <a :href="formatAddress" target="_blank" class="location me-5">View on map</a>
-            </div>
+          </div>
+        </div>
+        <!-- !telefono e contatti -->
+        <div class="contacts mx-5">
+          <h4 class="phone mt-3">Phone: +39 {{ doctor.phone }}</h4>
+          <h6 class="location me-5">Location: {{ doctor.address }}</h6>
+          <a :href="formatAddress" target="_blank" class="location me-5"
+            >Scopri dove si trova!</a
+          >
+          <div class="mt-3">
+            <router-link
+              :to="{ name: 'contact' }"
+              class="btn btn-sm btn-primary me-3 mb-2"
+              ><i class="fa-solid fa-paper-plane me-2"></i
+              >Messaggio</router-link
+            >
+          </div>
+        </div>
+        <!-- ! stripe recensioni -->
+        <div class="alt-bg p-3 flex-column rounded stripe-collappse">
+          <div class="top">
+            <h2 class="text-light pt-3">Conosci {{ doctor.user.name }} ?</h2>
+          </div>
+          <div class="bottom d-flex align-items-center">
+            <!--! recensione -->
             <div class="message-review-vote d-flex flex-column">
-              <router-link :to="{ name: 'contact' }" class="btn btn-sm btn-primary me-3 mb-2">Contact me</router-link>
-              <router-link :to="{ name: 'review' }" class="btn btn-sm btn-secondary me-3 mb-2">Leave a
-                review</router-link>
+              <router-link
+                :to="{ name: 'review' }"
+                class="btn btn-sm btn-secondary me-3 mb-2"
+                >Lacia una Recensione</router-link
+              >
             </div>
+            <!--! voto -->
             <form @submit.prevent="sendForm" novalidate>
               <div class="d-flex flex-column me-3">
-                <label for="vote" class="form-label">Lascia un voto<sup class="text-danger">*</sup></label>
-                <select @change="changeVote" v-model="voto" class="mb-2" aria-label="Default select example">
+                <label for="vote" class="form-label"
+                  >Lascia un voto<sup class="text-danger">*</sup></label
+                >
+                <select
+                  @change="changeVote"
+                  v-model="voto"
+                  class="mb-2 form-select"
+                  aria-label="Default select example"
+                >
                   <option :value="0" selected>Voto</option>
                   <option :value="1">Pessimo</option>
                   <option :value="2">Discreto</option>
@@ -274,23 +211,91 @@ export default {
                   <option :value="4">Ottimo</option>
                   <option :value="5">Eccellente</option>
                 </select>
-                <button type="submit" class="btn btn-primary p-1 align-self-center">
-                  Submit
+                <button
+                  type="submit"
+                  class="btn btn-primary p-1 align-self-center"
+                >
+                  Invia
                 </button>
               </div>
             </form>
           </div>
-          <div class="d-flex">
-            <div class="review">
-              <hr class="mt-0" />
-              <ReviewCard v-for="review in doctor.review" :review="review" />
+        </div>
+      </div>
+
+      <!-- !stripe recensioni small -->
+      <div
+        class="alt-bg container align-items-center justify-content-between rounded small-stripe my-4"
+      >
+        <div class="top">
+          <h2 class="text-light pt-3">Conosci {{ doctor.user.name }} ?</h2>
+        </div>
+        <div class="bottom d-flex align-items-center">
+          <!--! recensione -->
+          <div class="message-review-vote d-flex flex-column">
+            <router-link
+              :to="{ name: 'review' }"
+              class="btn btn-sm btn-secondary me-3 mb-2"
+              >Lacia una Recensione</router-link
+            >
+          </div>
+          <!--! voto -->
+          <form @submit.prevent="sendForm" novalidate>
+            <div class="d-flex flex-column me-3">
+              <label for="vote" class="form-label"
+                >Lascia un voto<sup class="text-danger">*</sup></label
+              >
+              <select
+                @change="changeVote"
+                v-model="voto"
+                class="mb-2 form-select"
+                aria-label="Default select example"
+              >
+                <option :value="0" selected>Voto</option>
+                <option :value="1">Pessimo</option>
+                <option :value="2">Discreto</option>
+                <option :value="3">Buono</option>
+                <option :value="4">Ottimo</option>
+                <option :value="5">Eccellente</option>
+              </select>
+              <button
+                type="submit"
+                class="btn btn-primary p-1 align-self-center"
+              >
+                Invia
+              </button>
             </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- tabelle principali -->
+      <div class="d-flex main-wrapper">
+        <div class="review mb-5">
+          <div class="bg-primary rounded">
+            <h1 class="text-light m-0">Recensioni</h1>
+          </div>
+          <div class="p-5 my-bgc rounded-bottom">
+            <ReviewCard v-for="review in doctor.review" :review="review" />
+          </div>
+        </div>
+        <div class="vote-title">
+          <div class="bg-primary mx-2 mb-1 rounded px-2">
+            <h1 class="text-light m-0 mb-3 rounded-top">Voti</h1>
+          </div>
+          <div class="vote-wrapper">
             <div class="vote">
-              <hr class="mt-0" />
-              <VoteCard v-for="vote in doctor.votes" :vote="vote" />
+              <VoteCard
+                class="mt-2"
+                v-for="vote in doctor.votes"
+                :vote="vote"
+              />
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -299,12 +304,10 @@ export default {
 }
 
 .vote {
-  width: 25%;
   max-height: 600px;
-  overflow: auto;
   padding: 0;
+  transform: translate(0px, -8px);
 }
-
 
 .stars {
   font-size: 22px;
@@ -351,17 +354,20 @@ export default {
 
   img {
     transform: translate(60px, -120px);
-
   }
 }
 
 // media custom per sezione voti
 @media (min-width: 1550px) {
   .vote {
-    transform: translate(0px, -230px);
+    transform: translate(0px, -8px);
     max-height: 800px;
   }
-
+  .vote-wrapper {
+    display: flex;
+    overflow-x: auto;
+    margin-bottom: 15px;
+  }
 }
 
 @media (max-width: 990px) {
@@ -379,8 +385,6 @@ export default {
 
     .top {
       min-width: 200px;
-
-
     }
   }
 
@@ -393,10 +397,12 @@ export default {
 
     .vote {
       width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
 
       .vote-wrapper {
         display: flex;
-        overflow-x: auto;
         margin-bottom: 15px;
       }
     }
@@ -407,6 +413,5 @@ export default {
   .small-stripe {
     display: none;
   }
-
 }
 </style>
