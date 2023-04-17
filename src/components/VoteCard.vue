@@ -15,7 +15,7 @@ export default {
       return message;
     },
     try() {
-      console.log(this.vote);
+      console.log(this.vote.created_at);
     },
   },
   computed: {
@@ -26,7 +26,7 @@ export default {
       const year = date.getFullYear();
       let hours = date.getHours();
       let minutes = date.getMinutes();
-      const seconds = date.getSeconds();
+      let seconds = date.getSeconds();
 
       // Fix zero bug
       if (day < 10) day = "0" + day;
