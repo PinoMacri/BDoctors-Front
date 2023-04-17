@@ -10,8 +10,8 @@ export default {
       let message = "";
       for (let i = 0; i < 5; i++)
         if (voto && i < voto) {
-          message += " &#9733 ";
-        } else message += " &#9734 ";
+          message += " <i class='fa-solid fa-star'></i> ";
+        } else message += " <i class='fa-regular fa-star'></i> ";
       return message;
     },
     try() {
@@ -25,16 +25,25 @@ export default {
 </script>
 
 <template>
-  <div class="vote ms-4">
-    <p class="stars" v-html="getStar()"></p>
+  <div class="my-bgc mb-2 p-3 mx-2 rounded my-border ">
+    <div class="vote">
+      <p class="stars d-flex" v-html="getStar()"></p>
+    </div>
   </div>
-  <hr />
 </template>
 
 <style scoped lang="scss">
 .stars {
   font-size: 22px;
   text-shadow: 1px 2px black;
-  color: yellow !important;
+  color: rgb(79, 185, 255) !important;
+}
+
+.my-bgc {
+  background-color: rgb(241, 241, 241);
+}
+
+.my-border {
+  border: 1px solid rgb(132, 206, 255);
 }
 </style>
