@@ -76,11 +76,16 @@ export default {
   <div v-if="reviewNumber <= this.review || reviewNumber === 0">
     <div v-if="voto <= this.media || voto === 1 || voto === 0">
       <router-link :to="{ name: 'doctor-detail', params: { id: doctor.id } }">
-        <div class="card doctor-card mb-0 mt-4 text-bg-dark">
+        <div class="card position-relative doctor-card mb-0 mt-4 text-bg-dark">
+
           <img v-if="!doctor.photo"
             src="https://t4.ftcdn.net/jpg/02/60/04/09/240_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
             class="card-img" alt="..." />
+
           <img v-else :src="'http://127.0.0.1:8000/storage/' + doctor.photo" class="card-img" alt="..." />
+          <img v-if="doctor.is_sponsored" src="../../../public/Sponsored.png" alt="logo overlay"
+            class="img-fluid premium" />
+
           <div class="card-img-overlay overlay">
             <h5 class="card-title text-center h3">{{ doctor.user.name }}</h5>
             <div class="d-flex justify-content-center mt-4">
@@ -103,6 +108,15 @@ export default {
 </template>
 
 <style scoped lang="scss">
+.premium {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  z-index: 2;
+  width: 100px;
+
+}
+
 .stars {
   color: yellow !important;
 }
