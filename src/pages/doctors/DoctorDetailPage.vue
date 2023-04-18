@@ -179,6 +179,20 @@ export default {
         </div>
       </div>
 
+      <!-- !telefono e contatti small -->
+      <div class=" contacts-small">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="contacts-wrapper">
+            <h4 class="phone mt-3">Phone: +39 {{ doctor.phone }}</h4>
+            <h6 class="location me-5">Location: {{ doctor.address }}</h6>
+            <a :href="formatAddress" target="_blank" class="location me-5">Scopri dove si trova!</a>
+          </div>
+          <div class="mt-3">
+            <router-link :to="{ name: 'contact' }" class="btn btn-sm btn-primary me-3 mb-2"><i
+                class="fa-solid fa-paper-plane me-2"></i>Messaggio</router-link>
+          </div>
+        </div>
+      </div>
       <!-- !stripe recensioni small -->
       <div class="alt-bg container align-items-center justify-content-between rounded small-stripe my-4">
         <div class="top">
@@ -209,7 +223,6 @@ export default {
           </form>
         </div>
       </div>
-
       <!-- tabelle principali -->
       <div class="d-flex justify-content-between main-wrapper">
         <div v-if="doctor.review[0]" class="review mb-5">
@@ -222,8 +235,8 @@ export default {
         </div>
 
 
-        <div v-else-if="!doctor.review[0]" class="no-review bg-primary rounded">
-          <h1 class="text-light m-0">Non ci sono Recensioni</h1>
+        <div v-else-if="!doctor.review[0]" class="no-review rounded m-2 mb-4 justify-content-center pt-4">
+          <h1 class="text-light bg-primary rounded p-2">Non ci sono recensioni al momento</h1>
         </div>
 
         <div v-if="doctor.votes[0]" class="vote-title">
@@ -237,12 +250,8 @@ export default {
           </div>
         </div>
 
-        <div v-else-if="!doctor.votes[0]" class="d-flex justify-content-end w-100">
-          <div class="vote-titles">
-            <div class="bg-primary mx-2 mb-1 rounded px-2">
-              <h1 class="text-light m-0 p-1 rounded-top">Non ci sono Voti</h1>
-            </div>
-          </div>
+        <div v-else-if="!doctor.votes[0]" class="no-votes rounded m-2 mb-4 justify-content-center p-4">
+          <h3 class="text-light bg-primary rounded p-3">Non ci sono Voti</h3>
 
         </div>
 
@@ -329,9 +338,6 @@ export default {
   transform: translate(0px, -45px);
   min-height: 215px;
 
-  h2 {
-    max-width: 150px;
-  }
 }
 
 .premium-over {
@@ -341,6 +347,22 @@ export default {
   img {
     transform: translate(60px, -120px);
   }
+}
+
+.contacts-small {
+  display: none;
+}
+
+.no-review {
+  height: 300px;
+  background-color: rgb(241, 241, 241);
+  width: 70%;
+  align-items: flex-start;
+}
+
+.no-votes {
+  height: 300px;
+  background-color: rgb(241, 241, 241);
 }
 
 // media custom per sezione voti
@@ -373,10 +395,22 @@ export default {
     .top {
       min-width: 200px;
     }
+
+  }
+
+  @media (max-width: 700px) {
+    .contacts-small {
+      display: block;
+    }
+
+    .contacts {
+      display: none;
+    }
   }
 
   .main-wrapper {
     flex-direction: column;
+    align-items: center;
 
     .review {
       width: 100%;
