@@ -271,7 +271,7 @@ select {
 }
 
 .ricerca-body {
-  min-height: calc(100vh - 379px);
+  min-height: calc(100vh - 378px);
   background-image: linear-gradient(to bottom,
       rgb(109, 166, 212),
       rgb(255, 255, 255));
